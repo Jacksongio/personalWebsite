@@ -1,0 +1,231 @@
+🔑 Got authentication token
+
+🔍 Fetching latest deployment...
+✅ Found latest deployment
+
+📦 Deployment ID:  dpl_5JghpyHy7wT9zdDxLbznrjWmDkoC
+🌐 Deployment URL: personal-website-dsjzd0jz4-jacksons-projects-700c577e.vercel.app
+📁 Project:        personal-website
+
+📋 Fetching file tree from API...
+
+✅ Got file tree
+
+⬇️  Downloading files...
+   (Use --verbose to see detailed progress)
+
+📁 Output directory: /home/zeno/dev/personalWebsite/out
+
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/app/globals.css
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/app/layout.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/app/page.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/accordion.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/alert-dialog.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/alert.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/aspect-ratio.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/avatar.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/badge.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/breadcrumb.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/button.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/calendar.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/card.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/carousel.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/chart.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/checkbox.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/collapsible.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/command.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/context-menu.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/dialog.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/drawer.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/dropdown-menu.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/form.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/hover-card.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/input-otp.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/input.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/label.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/menubar.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/navigation-menu.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/pagination.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/popover.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/progress.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/radio-group.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/resizable.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/scroll-area.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/select.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/separator.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/sheet.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/sidebar.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/skeleton.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/slider.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/sonner.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/switch.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/table.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/tabs.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/textarea.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/toast.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/toaster.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/toggle-group.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/toggle.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/tooltip.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/use-mobile.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/ui/use-toast.ts
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/contact-section.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/experience-section.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/footer.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/hero-section.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/navigation.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/projects-section.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/stats-section.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components/theme-provider.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/hooks/use-mobile.tsx
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/hooks/use-toast.ts
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/lib/utils.ts
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/favicon.ico
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/placeholder-logo.png
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/placeholder-logo.svg
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/placeholder-user.jpg
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/placeholder.jpg
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/placeholder.svg
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/profile.jpg
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/public/resume.pdf
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/styles/components.json
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/styles/globals.css
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/LICENSE
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/README.md
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/components.json
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/next-env.d.ts
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/next.config.mjs
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/package-lock.json
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/package.json
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/pnpm-lock.yaml
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/postcss.config.mjs
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/tailwind.config.ts
+✅ Downloaded: /home/zeno/dev/personalWebsite/out/tsconfig.json
+
+🎉 All files processed successfully!
+
+📊 Running comparison...
+
+📁 Total files: 85
+   ✅ Downloaded: 85
+   ⏭️  Skipped: 0
+💾 Total size: 1.74 MB
+
+📈 File types breakdown:
+   tsx               60 files
+   ts                 5 files
+   json               5 files
+   jpg                3 files
+   css                2 files
+   svg                2 files
+   mjs                2 files
+   ico                1 files
+   png                1 files
+   pdf                1 files
+
+🔍 Verifying important files:
+   ✅ package.json                                  2.1 KB
+   ❌ next.config.ts - NOT FOUND
+   ✅ tsconfig.json                                 0.6 KB
+   ❌ src/middleware.ts - NOT FOUND
+   ❌ src/app/layout.tsx - NOT FOUND
+   ❌ src/services/prisma/schema.prisma - NOT FOUND
+
+🌳 File structure tree:
+
+├── 📁 app
+│   ├── 📄 globals.css
+│   ├── 📄 layout.tsx
+│   └── 📄 page.tsx
+├── 📁 components
+│   ├── 📁 ui
+│   │   ├── 📄 accordion.tsx
+│   │   ├── 📄 alert-dialog.tsx
+│   │   ├── 📄 alert.tsx
+│   │   ├── 📄 aspect-ratio.tsx
+│   │   ├── 📄 avatar.tsx
+│   │   ├── 📄 badge.tsx
+│   │   ├── 📄 breadcrumb.tsx
+│   │   ├── 📄 button.tsx
+│   │   ├── 📄 calendar.tsx
+│   │   ├── 📄 card.tsx
+│   │   ├── 📄 carousel.tsx
+│   │   ├── 📄 chart.tsx
+│   │   ├── 📄 checkbox.tsx
+│   │   ├── 📄 collapsible.tsx
+│   │   ├── 📄 command.tsx
+│   │   ├── 📄 context-menu.tsx
+│   │   ├── 📄 dialog.tsx
+│   │   ├── 📄 drawer.tsx
+│   │   ├── 📄 dropdown-menu.tsx
+│   │   ├── 📄 form.tsx
+│   │   ├── 📄 hover-card.tsx
+│   │   ├── 📄 input-otp.tsx
+│   │   ├── 📄 input.tsx
+│   │   ├── 📄 label.tsx
+│   │   ├── 📄 menubar.tsx
+│   │   ├── 📄 navigation-menu.tsx
+│   │   ├── 📄 pagination.tsx
+│   │   ├── 📄 popover.tsx
+│   │   ├── 📄 progress.tsx
+│   │   ├── 📄 radio-group.tsx
+│   │   ├── 📄 resizable.tsx
+│   │   ├── 📄 scroll-area.tsx
+│   │   ├── 📄 select.tsx
+│   │   ├── 📄 separator.tsx
+│   │   ├── 📄 sheet.tsx
+│   │   ├── 📄 sidebar.tsx
+│   │   ├── 📄 skeleton.tsx
+│   │   ├── 📄 slider.tsx
+│   │   ├── 📄 sonner.tsx
+│   │   ├── 📄 switch.tsx
+│   │   ├── 📄 table.tsx
+│   │   ├── 📄 tabs.tsx
+│   │   ├── 📄 textarea.tsx
+│   │   ├── 📄 toast.tsx
+│   │   ├── 📄 toaster.tsx
+│   │   ├── 📄 toggle-group.tsx
+│   │   ├── 📄 toggle.tsx
+│   │   ├── 📄 tooltip.tsx
+│   │   ├── 📄 use-mobile.tsx
+│   │   └── 📄 use-toast.ts
+│   ├── 📄 contact-section.tsx
+│   ├── 📄 experience-section.tsx
+│   ├── 📄 footer.tsx
+│   ├── 📄 hero-section.tsx
+│   ├── 📄 navigation.tsx
+│   ├── 📄 projects-section.tsx
+│   ├── 📄 stats-section.tsx
+│   └── 📄 theme-provider.tsx
+├── 📁 hooks
+│   ├── 📄 use-mobile.tsx
+│   └── 📄 use-toast.ts
+├── 📁 lib
+│   └── 📄 utils.ts
+├── 📁 public
+│   ├── 📄 favicon.ico
+│   ├── 📄 placeholder-logo.png
+│   ├── 📄 placeholder-logo.svg
+│   ├── 📄 placeholder-user.jpg
+│   ├── 📄 placeholder.jpg
+│   ├── 📄 placeholder.svg
+│   ├── 📄 profile.jpg
+│   └── 📄 resume.pdf
+├── 📁 styles
+│   ├── 📄 components.json
+│   └── 📄 globals.css
+├── 📄 components.json
+├── 📄 LICENSE
+├── 📄 next-env.d.ts
+├── 📄 next.config.mjs
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 pnpm-lock.yaml
+├── 📄 postcss.config.mjs
+├── 📄 README.md
+├── 📄 tailwind.config.ts
+└── 📄 tsconfig.json
+
+✨ Download and verification complete!
+📄 Full log saved to: /home/zeno/dev/personalWebsite/download-log.txt
+
