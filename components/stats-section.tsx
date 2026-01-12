@@ -1,9 +1,9 @@
 export function StatsSection() {
   const stats = [
-    { number: "5", label: "Computers built" },
-    { number: "23", label: "Coding Projects" },
+    { number: "7", label: "Projects Deployed" },
+    { number: "32", label: "Github Project Repositories" },
     { number: "12", label: "Years Experience with programming" },
-    { number: "4", label: "Deployed Apps" },
+    { number: "5", label: "Computers Built" },
   ]
 
   return (

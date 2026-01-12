@@ -2,10 +2,10 @@ export function ExperienceSection() {
   const education = [
     {
       period: "2025-2026",
-      title: "M.S. Machine Learning",
+      title: "M.S. Software Engineering",
       institution: "University of Tennessee",
       description:
-        "I am currently attending University of Tennessee for my Masters of Science in Computer Science with a focus in Machine Learning, here I hope to extend my knowledge of AI and Machine Learning in this ever-changing field.",
+        "I am currently attending University of Tennessee for my Masters of Science in Computer Science with a focus in Software Engineering, here I hope to extend my knowledge of software engineering and build my skills in this ever-changing field.",
     },
     {
       period: "2025",

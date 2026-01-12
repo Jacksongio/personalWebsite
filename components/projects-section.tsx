@@ -1,11 +1,16 @@
 export function ProjectsSection() {
   const projects = [
     {
-      title: "GioAdvisor",
+      title: "FogReport.io",
       description:
-        "'GioGPT.com' is a website that is a personal chatbot. I personally trained this OpenAI API on my own dataset focused on sharp and straight to the point responses using the GPT 4o model. This chatbot has been designed to format Markdown output from the answers, thus permitting GioGPT to create code and answer complex questions.",
-      color: "from-orange-400 to-red-500",
-      githubUrl: "gioadvisor.com",
+        "A sophisticated web application for simulating military conflict scenarios, analyzing international warfare, and generating AI-powered strategic intelligence briefings with advanced RAG (Retrieval-Augmented Generation) capabilities. ",
+      githubUrl: "https://fogreport.io",
+    },
+    {
+      title: "ArcanAI",
+      description:
+        "ArcanAI: Private, offline LLM for iOS. Run Ollama models (Phi-3, Mistral, Llama 3.1) on-device via Core ML. No sign-in, no internet after download, no tracking. Choose models at setup, chat with streaming responses. Encrypted, local-only. Apple Silicon. Powered by swift-transformers. MIT license.",
+      githubUrl: "https://apps.apple.com/us/app/arcanai/id6755493224",
     },
     {
       title: "GioBlockchain",
@@ -35,13 +40,7 @@ export function ProjectsSection() {
       color: "from-orange-400 to-red-500",
       githubUrl: "https://github.com/jacksongio/GioGPT",
     },
-    {
-      title: "GioWorkout",
-      description:
-        "GioWorkout is a personal project that leverages the power of the ChatGPT API to create various innovative applications. GioWorkout is a dynamic workout generator that provides customized workout routines based on user preferences and goals.",
-      color: "from-purple-400 to-pink-500",
-      githubUrl: "https://github.com/jacksongio/GioWorkout",
-    },
+    
   ]
 
   return (
