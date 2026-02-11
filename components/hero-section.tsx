@@ -55,7 +55,7 @@ export function HeroSection() {
         </div>
 
         <p className="text-lg text-gray-100 max-w-2xl mx-auto mb-8 leading-relaxed animate-fade-in-up delay-700 drop-shadow-lg">
-        I am a recent Computer Science graduate from Virginia Tech's College of Engineering, and an incoming Associate Software Engineer at Proven AI. I am also currently a student at University of Tennessee for their Masters of Science in Computer Science program with a focus in Software Engineering. I am always looking for more to learn, and am always looking to collaborate on any coding projects!
+        I am a recent Computer Science graduate from Virginia Tech's College of Engineering, and an Associate Software Engineer at Proven AI. I am also currently a student at University of Tennessee for their Masters of Science in Computer Science program with a focus in Software Engineering. I am always looking for more to learn, and am always looking to collaborate on any coding projects!
         </p>
 
         <div className="flex justify-center space-x-6 animate-fade-in-up delay-1000">
