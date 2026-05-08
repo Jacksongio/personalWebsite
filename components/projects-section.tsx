@@ -10,7 +10,7 @@ export function ProjectsSection() {
       title: "ArcanAI",
       description:
         "ArcanAI: Private, offline LLM for iOS. Run Ollama models (Phi-3, Mistral, Llama 3.1) on-device via Core ML. No sign-in, no internet after download, no tracking. Choose models at setup, chat with streaming responses. Encrypted, local-only. Apple Silicon. Powered by swift-transformers. MIT license.",
-      githubUrl: "https://apps.apple.com/us/app/arcanai/id6755493224",
+      githubUrl: "https://github.com/Jacksongio/arcan_ai.git",
     },
     {
       title: "GioBlockchain",
@@ -38,7 +38,7 @@ export function ProjectsSection() {
       description:
         "'GioGPT.com' is a website that is a personal chatbot. I personally trained this OpenAI API on my own dataset focused on sharp and straight to the point responses using the GPT 4o model. This chatbot has been designed to format Markdown output from the answers, thus permitting GioGPT to create code and answer complex questions.",
       color: "from-orange-400 to-red-500",
-      githubUrl: "https://github.com/jacksongio/GioGPT",
+      githubUrl: "https://github.com/Jacksongio/GioGPT.git",
     },
     
   ]
