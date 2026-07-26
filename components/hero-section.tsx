@@ -1,84 +1,138 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { ArrowDownRight, ArrowUpRight } from "lucide-react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+
+import { MagneticLink } from "@/components/motion/primitives"
+import { useScrollStory } from "@/components/scroll/scroll-story"
+import { profile } from "@/lib/site-content"
+
+const CorridorScene = dynamic(() => import("@/components/hero/corridor-scene"), {
+  ssr: false,
+})
+
+const TIERS = {
+  mobile: { boxes: 56, dust: 380, mobile: true },
+  low: { boxes: 100, dust: 700, mobile: false },
+  full: { boxes: 170, dust: 1050, mobile: false },
+} as const
 
 export function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { chapter } = useScrollStory()
+  const [tier, setTier] = useState<(typeof TIERS)[keyof typeof TIERS] | null>(null)
+  const { scrollY } = useScroll()
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  })
+
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -180])
+  const titleScale = useTransform(scrollYProgress, [0, 0.75], [1, 0.82])
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.68], [1, 0])
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 240])
+  const edgeOpacity = useTransform(scrollYProgress, [0.55, 1], [1, 0])
+
+  useEffect(() => {
+    if (reducedMotion) return
+    const cores = navigator.hardwareConcurrency ?? 4
+    const narrow = window.matchMedia("(max-width: 768px)").matches
+    setTier(narrow ? TIERS.mobile : cores <= 4 ? TIERS.low : TIERS.full)
+  }, [reducedMotion])
+
   return (
-    <section className="relative pt-24 pb-20 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-500"></div>
+    <>
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(94,231,247,.13),transparent_28%),radial-gradient(circle_at_82%_24%,rgba(139,92,246,.2),transparent_34%),radial-gradient(circle_at_54%_88%,rgba(199,255,94,.08),transparent_32%),#050507]" />
+        {tier && (
+          <CorridorScene
+            scrollY={scrollY}
+            storyProgress={chapter}
+            boxCount={tier.boxes}
+            dustCount={tier.dust}
+            mobile={tier.mobile}
+          />
+        )}
+        <div className="corridor-scrim absolute inset-0" />
+        <div className="story-grid absolute inset-0 opacity-30" />
+        <div className="noise absolute inset-0 opacity-[0.035] mix-blend-soft-light" />
       </div>
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
-          ></div>
-        ))}
-      </div>
+      <section
+        id="about"
+        ref={sectionRef}
+        className="relative z-10 min-h-[125svh] border-b border-paper/10"
+      >
+        <div className="sticky top-0 flex min-h-svh flex-col overflow-hidden px-5 pb-8 pt-24 sm:px-8 lg:px-12">
+          <motion.div
+            style={reducedMotion ? undefined : { opacity: edgeOpacity }}
+            className="flex items-start justify-between font-mono text-[9px] uppercase tracking-[0.22em] text-paper/50 sm:text-[10px]"
+          >
+            <p>
+              Portfolio / 2026
+              <br />
+              Reston, Virginia
+            </p>
+            <p className="flex items-center gap-2 text-right">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-acid" />
+              Open to collaboration
+            </p>
+          </motion.div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <div className="mb-8">
-          <div className="relative w-40 h-40 mx-auto mb-8 group">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
-            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/20 shadow-2xl group-hover:scale-105 transition-transform duration-500">
-              <Image
-                src="/profile.jpg"
-                alt="Jackson Giordano"
-                width={160}
-                height={160}
-                className="w-full h-full object-cover"
-              />
+          <motion.div
+            style={reducedMotion ? undefined : { y: titleY, scale: titleScale, opacity: titleOpacity }}
+            className="my-auto origin-center py-12"
+          >
+            <p className="mb-3 ml-[1vw] font-mono text-[10px] uppercase tracking-[0.32em] text-acid">
+              Software engineer / AI builder
+            </p>
+            <h1 className="font-display text-[clamp(4.2rem,14.4vw,13.5rem)] font-medium leading-[0.72] tracking-[-0.09em] text-paper">
+              <span className="block">JACKSON</span>
+              <span className="ml-[7vw] block">
+                GI<span className="outline-text">OR</span>DANO
+              </span>
+            </h1>
+          </motion.div>
+
+          <div className="grid items-end gap-8 lg:grid-cols-[1fr_minmax(280px,440px)_1fr]">
+            <motion.div
+              style={reducedMotion ? undefined : { y: portraitY }}
+              className="hidden items-end gap-4 lg:flex"
+            >
+              <div className="relative h-24 w-20 overflow-hidden rounded-[2rem_2rem_.5rem_.5rem] border border-paper/20">
+                <Image src="/profile.jpg" alt="" fill sizes="80px" className="object-cover" priority />
+              </div>
+              <p className="max-w-[12rem] font-mono text-[9px] uppercase leading-relaxed tracking-[0.18em] text-paper/40">
+                Building systems where product thinking meets precise engineering.
+              </p>
+            </motion.div>
+
+            <p className="text-balance text-sm leading-relaxed text-paper/60 sm:text-base">
+              {profile.blurb}
+            </p>
+
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <MagneticLink href="#projects">
+                Selected work <ArrowDownRight className="ml-2 h-4 w-4" />
+              </MagneticLink>
+              <MagneticLink href={profile.resume} external className="bg-paper text-ink hover:bg-acid">
+                Résumé <ArrowUpRight className="ml-2 h-4 w-4" />
+              </MagneticLink>
             </div>
           </div>
 
-          <h1 className="text-6xl font-light text-white mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
-            Jackson Giordano
-          </h1>
-          <p className="text-2xl text-blue-200 mb-2 animate-fade-in-up delay-300 drop-shadow-lg">
-            Software Engineer
-          </p>
-          <p className="text-lg text-purple-200 animate-fade-in-up delay-500 drop-shadow-lg">
-            Proven AI
-          </p>
+          <motion.div
+            style={reducedMotion ? undefined : { opacity: edgeOpacity }}
+            className="absolute bottom-7 left-5 hidden items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-paper/35 sm:left-auto sm:right-8 sm:flex lg:right-12"
+          >
+            Scroll to explore <span className="h-px w-12 bg-paper/25" />
+          </motion.div>
         </div>
-
-        <p className="text-lg text-gray-100 max-w-2xl mx-auto mb-8 leading-relaxed animate-fade-in-up delay-700 drop-shadow-lg">
-        I am a recent Computer Science graduate from Virginia Tech's College of Engineering, and an Associate Software Engineer at Proven AI. I am also currently a student at University of Tennessee for their Masters of Science in Computer Science program with a focus in Software Engineering. I am always looking for more to learn, and am always looking to collaborate on any coding projects!
-        </p>
-
-        <div className="flex justify-center space-x-6 animate-fade-in-up delay-1000">
-          <Link href="https://github.com/jacksongio" target="_blank" rel="noopener noreferrer">
-            <Button
-              size="lg"
-              className="relative bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-4 rounded-full text-lg font-medium shadow-lg hover:shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 group overflow-hidden"
-            >
-              <span className="relative z-10">View My Work</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Button>
-          </Link>
-          <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-            <Button
-              variant="outline"
-              size="lg"
-              className="relative px-8 py-4 rounded-full text-lg font-medium bg-white/10 border-2 border-white/30 text-white hover:bg-white/20 hover:border-white/50 backdrop-blur-sm transition-all duration-300 group hover:shadow-lg hover:shadow-white/25"
-            >
-              <span className="relative z-10">Download Resume</span>
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

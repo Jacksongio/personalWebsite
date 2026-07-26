@@ -1,14 +1,37 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next"
+import { IBM_Plex_Mono, Manrope, Space_Grotesk } from "next/font/google"
+import "./globals.css"
+import "lenis/dist/lenis.css"
+import { SmoothScroll } from "@/components/smooth-scroll"
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500"],
+  variable: "--font-mono",
+})
 
 export const metadata: Metadata = {
-  title: 'Jackson Giordano - Personal Website',
-  description: 'I am a recent Computer Science graduate from Virginia Techs College of Engineering, and an incoming Associate Software Engineer at Proven AI. ',
-  generator: 'v0.dev',
+  title: "Jackson Giordano — Software Engineer",
+  description:
+    "Software engineer building thoughtful AI products, systems, and digital experiences.",
+  metadataBase: new URL("https://giordano.us"),
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 }
 
@@ -18,8 +41,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={`dark ${manrope.variable} ${spaceGrotesk.variable} ${plexMono.variable}`}
+    >
+      <body className="bg-ink font-sans antialiased">
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   )
 }

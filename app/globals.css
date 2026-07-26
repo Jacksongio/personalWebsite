@@ -32,8 +32,8 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 240 17% 2%;
+    --foreground: 48 22% 93%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
@@ -65,6 +65,25 @@
   }
   body {
     @apply bg-background text-foreground;
+    min-width: 320px;
+    overflow-x: hidden;
+    font-feature-settings: "ss01" 1, "cv11" 1;
+  }
+  html {
+    background: #050507;
+    scroll-padding-top: 5rem;
+  }
+  ::selection {
+    background: #c7ff5e;
+    color: #050507;
+  }
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid #c7ff5e;
+    outline-offset: 4px;
   }
 }
 
@@ -131,9 +150,123 @@
   animation-delay: 1000ms;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Lenis drives scrolling — native smooth behavior would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/*
+ * Bare text sits directly over the live particle field (there is no page-wide
+ * scrim), so it needs its own separation from the background.
+ *
+ * Two variants: text-shadow for normal text, and a drop-shadow filter for
+ * gradient headings — those use `color: transparent` with background-clip, and a
+ * text-shadow would show straight through the glyphs as a dark blurry double.
+ */
+.text-legible {
+  text-shadow:
+    0 1px 2px rgba(5, 5, 10, 0.95),
+    0 2px 18px rgba(5, 5, 10, 0.8);
+}
+
+.heading-legible {
+  filter: drop-shadow(0 2px 4px rgba(5, 5, 10, 0.95))
+    drop-shadow(0 4px 24px rgba(5, 5, 10, 0.7));
+}
+
+/*
+ * Centre scrim for the box corridor.
+ *
+ * A corridor's box density is highest at the vanishing point — the middle of
+ * the screen, which is exactly where the text sits. So this darkens the centre
+ * (the opposite of a normal vignette) and adds only a light falloff at the far
+ * edges, where the rushing boxes are the effect worth seeing.
+ */
+.corridor-scrim {
+  background:
+    radial-gradient(
+      ellipse 42% 46% at 50% 46%,
+      rgba(5, 5, 10, 0.82),
+      rgba(5, 5, 10, 0.45) 55%,
+      transparent 78%
+    ),
+    radial-gradient(ellipse at center, transparent 62%, rgba(5, 5, 10, 0.55) 100%);
+}
+
+/* Film grain overlay for the hero */
+.hero-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.story-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: clamp(48px, 6vw, 92px) clamp(48px, 6vw, 92px);
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+}
+
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='4' stitchTiles='stitchTiles'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(241, 239, 233, 0.38);
+}
+
+.chapter-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.chapter-shell::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: linear-gradient(to bottom, rgba(5, 5, 7, 0.1), rgba(5, 5, 7, 0.88) 14%, rgba(5, 5, 7, 0.88) 86%, rgba(5, 5, 7, 0.1));
+  pointer-events: none;
+}
+
+.writing-vertical {
+  writing-mode: vertical-rl;
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker 26s linear infinite;
+}
+
+@media (hover: hover) {
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom scrollbar */

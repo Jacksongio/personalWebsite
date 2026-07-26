@@ -1,64 +1,77 @@
-import { Button } from "@/components/ui/button"
-import { Mail, MapPin, User } from "lucide-react"
-import Link from "next/link"
+"use client"
+
+import { useRef } from "react"
+import { ArrowUpRight } from "lucide-react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+
+import { MagneticLink, SectionLabel } from "@/components/motion/primitives"
+import { profile, socials } from "@/lib/site-content"
 
 export function ContactSection() {
-  const contactInfo = [
-    { icon: User, label: "Name", value: "Jackson Giordano" },
-    { icon: Mail, label: "Email", value: "jackson@giordano.us" },
-    { icon: MapPin, label: "From", value: "Reston, Virginia" },
-  ]
+  const ref = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end end"],
+  })
+  const rotate = useTransform(scrollYProgress, [0, 1], [-7, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [0.76, 1])
+  const y = useTransform(scrollYProgress, [0, 1], [160, 0])
 
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-br from-black via-gray-900 to-purple-900 relative overflow-hidden"
+      ref={ref}
+      className="relative z-10 overflow-hidden bg-acid text-ink"
     >
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
+      <div className="story-grid absolute inset-0 opacity-20" />
+      <div className="relative mx-auto flex min-h-svh max-w-[1600px] flex-col px-5 py-20 sm:px-8 sm:py-28 lg:px-12">
+        <SectionLabel index="04" className="text-ink/55 [&>span:first-child]:border-ink/20 [&>span:first-child]:text-ink [&>span:last-child]:bg-ink/15">
+          Start a conversation
+        </SectionLabel>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-5xl font-light bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-4 drop-shadow-lg">
-          Get In Touch
-        </h2>
-        <p className="text-xl text-gray-200 mb-12">I'm always interested in new opportunities and collaborations</p>
+        <motion.div
+          style={reducedMotion ? undefined : { rotate, scale, y }}
+          className="my-auto origin-bottom-left"
+        >
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/55">
+            Have an idea? A role? A hard problem?
+          </p>
+          <h2 className="mt-6 max-w-7xl font-display text-[clamp(4rem,13vw,13rem)] font-semibold leading-[0.72] tracking-[-0.09em]">
+            LET&apos;S MAKE
+            <span className="block pl-[8vw] text-transparent [-webkit-text-stroke:1.5px_#050507]">
+              IT REAL.
+            </span>
+          </h2>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {contactInfo.map((item, index) => {
-            const Icon = item.icon
-            return (
-              <div
-                key={index}
-                className="group text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/25 hover:-translate-y-2"
+        <div className="mt-16 grid gap-8 border-t border-ink/20 pt-7 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div>
+            <p className="max-w-xl text-sm leading-7 text-ink/65 sm:text-base">
+              I&apos;m always interested in new opportunities and collaborations. The fastest way
+              to reach me is email.
+            </p>
+            <a
+              href={`mailto:${profile.email}`}
+              className="mt-5 inline-block font-display text-[clamp(1.45rem,3.5vw,3.5rem)] font-medium tracking-[-0.04em] underline decoration-1 underline-offset-8 transition-opacity hover:opacity-60"
+            >
+              {profile.email}
+            </a>
+          </div>
+
+          <div className="flex flex-wrap gap-2 lg:justify-end">
+            {socials.map((social) => (
+              <MagneticLink
+                key={social.label}
+                href={social.href}
+                external={social.href.startsWith("http")}
+                className="border-ink/25 hover:border-ink hover:bg-ink hover:text-acid"
               >
-                <div className="relative w-16 h-16 mx-auto mb-4">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
-                  <div className="relative w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                <p className="text-sm text-gray-400 mb-2 group-hover:text-gray-300 transition-colors duration-300">
-                  {item.label}
-                </p>
-                <p className="text-white font-medium group-hover:text-blue-200 transition-colors duration-300 drop-shadow-md">
-                  {item.value}
-                </p>
-              </div>
-            )
-          })}
+                {social.label} <ArrowUpRight className="ml-2 h-4 w-4" />
+              </MagneticLink>
+            ))}
+          </div>
         </div>
-
-        <Link href="mailto:jackson@giordano.us">
-          <Button
-            size="lg"
-            className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 text-white px-12 py-4 rounded-full text-lg font-medium shadow-2xl hover:shadow-blue-500/50 transition-all duration-500 group overflow-hidden"
-          >
-            <span className="relative z-10">Send Message</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-          </Button>
-        </Link>
       </div>
     </section>
   )

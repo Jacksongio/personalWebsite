@@ -1,119 +1,78 @@
-export function ExperienceSection() {
-  const education = [
-    {
-      period: "2025-2026",
-      title: "M.S. Software Engineering",
-      institution: "University of Tennessee",
-      description:
-        "I am currently attending University of Tennessee for my Masters of Science in Computer Science with a focus in Software Engineering, here I hope to extend my knowledge of software engineering and build my skills in this ever-changing field.",
-    },
-    {
-      period: "2025",
-      title: "AI Engineering Bootcamp",
-      institution: "AI Makerspace",
-      description:
-        "Thoughout this bootcamp I learned about the basics of AI, RAG applications, and how to use Agentica AI within multiple use-cases for a deployed application.",
-    },
-    {
-      period: "2021-2025",
-      title: "B.S. Computer Science",
-      institution: "Virginia Polytechnic Institute",
-      description:
-        "I am recent graduate from Virginia Tech's College of Engineering with a Bachelor's of Science in Computer Science, here I learned about the basics of software and hardware of computers.",
-    },
-  ]
+"use client"
 
-  const experience = [
-    {
-      period: "2025-Present",
-      title: "Associate Software Engineer",
-      company: "Proven AI",
-      description:
-        "As an Associate Software Engineer at Proven AI, I am responsible for developing and maintaining the company's software products. I work on a variety of projects, including the company's personal websites, internal tools, and customer-facing applications.",
-    },
-    {
-      period: "2024-2025",
-      title: "Cyber Operations Intern",
-      company: "American Systems",
-      description:
-        "At American Systems I performed IT security operations as a Cyber Operations Intern, including incident response, security tool management, log analysis, and capability development, while enhancing cybersecurity skills in a dynamic enterprise environment.",
-    },
-    {
-      period: "2022-2024",
-      title: "Assistant Facilities Manager",
-      company: "Revolution Sportsplex",
-      description:
-        "As Assistant Facilities Manager, I maintained the turf fields to pristine condition, I handled staffing, purchased necessary equipment for maintenance of the facility, handled lighting schedule, and many more tasks.",
-    },
+import { useRef } from "react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+
+import { KineticHeading, SectionLabel } from "@/components/motion/primitives"
+import { education, experience, type TimelineEntry } from "@/lib/site-content"
+
+function StoryCard({
+  entry,
+  index,
+  type,
+}: {
+  entry: TimelineEntry
+  index: number
+  type: "Experience" | "Education"
+}) {
+  const ref = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 86%", "end 28%"],
+  })
+  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.72, 1], [0.2, 1, 1, 0.32])
+  const scale = useTransform(scrollYProgress, [0, 0.35, 0.8, 1], [0.94, 1, 1, 0.96])
+  const x = useTransform(scrollYProgress, [0, 0.35], [48, 0])
+
+  return (
+    <motion.article
+      ref={ref}
+      style={reducedMotion ? undefined : { opacity, scale, x }}
+      className="relative flex min-h-[58svh] flex-col justify-center border-t border-paper/15 py-16 first:border-t-0 lg:min-h-[72svh]"
+    >
+      <div className="mb-8 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em]">
+        <span className={type === "Experience" ? "text-acid" : "text-cyan"}>{type}</span>
+        <span className="text-paper/30">0{index + 1}</span>
+      </div>
+      <p className="font-mono text-xs uppercase tracking-[0.18em] text-paper/40">{entry.period}</p>
+      <h3 className="mt-5 max-w-3xl font-display text-[clamp(2.5rem,5.3vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.055em]">
+        {entry.title}
+      </h3>
+      <p className="mt-4 font-display text-xl text-electric sm:text-2xl">{entry.org}</p>
+      <p className="mt-8 max-w-2xl text-sm leading-7 text-paper/55 sm:text-base">{entry.description}</p>
+    </motion.article>
+  )
+}
+
+export function ExperienceSection() {
+  const entries = [
+    ...experience.map((entry) => ({ entry, type: "Experience" as const })),
+    ...education.map((entry) => ({ entry, type: "Education" as const })),
   ]
 
   return (
-    <section
-      id="experience"
-      className="py-20 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 relative overflow-hidden"
-    >
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <h2 className="text-5xl font-light text-center bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-16 drop-shadow-lg">
-          Education & Experience
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-16">
-          <div>
-            <h3 className="text-3xl font-medium text-white mb-8 flex items-center drop-shadow-lg">
-              <span className="w-2 h-8 bg-gradient-to-b from-green-400 to-green-600 rounded-full mr-4"></span>
-              My Education
-            </h3>
-            <div className="space-y-8">
-              {education.map((item, index) => (
-                <div key={index} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 group-hover:border-green-400/50 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-green-500/25 group-hover:-translate-y-1">
-                    <div className="inline-block bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-medium px-4 py-2 rounded-full mb-4 shadow-lg">
-                      {item.period}
-                    </div>
-                    <h4 className="text-xl font-medium text-white mb-2 group-hover:text-green-300 transition-colors duration-300">
-                      {item.title}
-                    </h4>
-                    <p className="text-green-300 text-sm mb-3 font-medium">{item.institution}</p>
-                    <p className="text-gray-200 text-sm leading-relaxed group-hover:text-white transition-colors duration-300">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+    <section id="experience" className="chapter-shell border-b border-paper/10">
+      <div className="mx-auto grid max-w-[1600px] gap-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[0.78fr_1.22fr] lg:gap-24 lg:px-12">
+        <div className="lg:sticky lg:top-24 lg:h-fit">
+          <SectionLabel index="02">Background / trajectory</SectionLabel>
+          <KineticHeading>
+            Built by doing.
+          </KineticHeading>
+          <p className="mt-9 max-w-md text-sm leading-7 text-paper/55 sm:text-base">
+            A timeline across software engineering, AI, security operations, and the education
+            that keeps the work moving forward.
+          </p>
+          <div className="mt-12 hidden items-center gap-4 font-mono text-[9px] uppercase tracking-[0.22em] text-paper/35 lg:flex">
+            <span className="h-2 w-2 rounded-full bg-acid" />
+            Scroll through the timeline
           </div>
+        </div>
 
-          <div>
-            <h3 className="text-3xl font-medium text-white mb-8 flex items-center drop-shadow-lg">
-              <span className="w-2 h-8 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full mr-4"></span>
-              My Experience
-            </h3>
-            <div className="space-y-8">
-              {experience.map((item, index) => (
-                <div key={index} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 group-hover:border-blue-400/50 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-blue-500/25 group-hover:-translate-y-1">
-                    <div className="inline-block bg-gradient-to-r from-blue-400 to-purple-500 text-white text-xs font-medium px-4 py-2 rounded-full mb-4 shadow-lg">
-                      {item.period}
-                    </div>
-                    <h4 className="text-xl font-medium text-white mb-2 group-hover:text-blue-300 transition-colors duration-300">
-                      {item.title}
-                    </h4>
-                    <p className="text-blue-300 text-sm mb-3 font-medium">{item.company}</p>
-                    <p className="text-gray-200 text-sm leading-relaxed group-hover:text-white transition-colors duration-300">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div>
+          {entries.map(({ entry, type }, index) => (
+            <StoryCard key={`${type}-${entry.title}`} entry={entry} type={type} index={index} />
+          ))}
         </div>
       </div>
     </section>

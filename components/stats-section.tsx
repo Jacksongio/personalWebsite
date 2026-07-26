@@ -1,36 +1,70 @@
+"use client"
+
+import { useRef } from "react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+
+import { CountUp, SectionLabel } from "@/components/motion/primitives"
+import { stats } from "@/lib/site-content"
+
+const TICKER = "BUILD / LEARN / SHIP / QUESTION / REPEAT / "
+
 export function StatsSection() {
-  const stats = [
-    { number: "7", label: "Projects Deployed" },
-    { number: "32", label: "Github Project Repositories" },
-    { number: "12", label: "Years Experience with programming" },
-    { number: "5", label: "Computers Built" },
-  ]
+  const sectionRef = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  })
+  const x = useTransform(scrollYProgress, [0, 1], ["8%", "-10%"])
+  const reverseX = useTransform(scrollYProgress, [0, 1], ["-11%", "7%"])
 
   return (
-    <section className="py-20 bg-gradient-to-b from-slate-900 to-gray-900 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_50%)]"></div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <section
+      id="stats"
+      ref={sectionRef}
+      className="chapter-shell overflow-hidden border-b border-paper/10 py-24 sm:py-32"
+    >
+      <div className="mx-auto max-w-[1600px] px-5 sm:px-8 lg:px-12">
+        <SectionLabel index="01">At a glance</SectionLabel>
+        <div className="grid border-l border-t border-paper/15 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="group relative text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/25 hover:-translate-y-2"
+            <motion.div
+              key={stat.label}
+              initial={reducedMotion ? false : { opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-12%" }}
+              transition={{ duration: 0.8, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative min-h-52 overflow-hidden border-b border-r border-paper/15 p-6 sm:min-h-64 sm:p-8"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10">
-                <div className="text-5xl font-light bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {stat.number}
-                </div>
-                <div className="text-sm text-gray-200 leading-tight group-hover:text-white transition-colors duration-300 drop-shadow-md">
-                  {stat.label}
-                </div>
-              </div>
-            </div>
+              <span className="font-mono text-[10px] text-paper/30">0{index + 1}</span>
+              <p className="mt-7 font-display text-[clamp(4.8rem,8vw,8.5rem)] font-medium leading-none tracking-[-0.08em]">
+                <CountUp value={stat.value} />
+                <span className="text-acid">{stat.suffix}</span>
+              </p>
+              <p className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.2em] text-paper/45 sm:bottom-8 sm:left-8">
+                {stat.label}
+              </p>
+              <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-acid transition-transform duration-500 group-hover:scale-x-100" />
+            </motion.div>
           ))}
         </div>
+      </div>
+
+      <div className="mt-20 rotate-[-2deg] border-y border-paper/15 bg-acid py-3 text-ink">
+        <motion.div
+          style={reducedMotion ? undefined : { x }}
+          className="w-max whitespace-nowrap font-display text-3xl font-semibold uppercase tracking-[-0.04em] sm:text-5xl"
+        >
+          {TICKER.repeat(4)}
+        </motion.div>
+      </div>
+      <div className="-mt-1 rotate-[1deg] border-y border-paper/15 bg-electric py-2 text-paper">
+        <motion.div
+          style={reducedMotion ? undefined : { x: reverseX }}
+          className="w-max whitespace-nowrap font-mono text-xs uppercase tracking-[0.28em] sm:text-sm"
+        >
+          {"SOFTWARE / AI / SYSTEMS / CREATIVE CODE / ".repeat(5)}
+        </motion.div>
       </div>
     </section>
   )

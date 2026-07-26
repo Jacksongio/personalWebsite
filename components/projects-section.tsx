@@ -1,108 +1,112 @@
-export function ProjectsSection() {
-  const projects = [
-    {
-      title: "FogReport.io",
-      description:
-        "A sophisticated web application for simulating military conflict scenarios, analyzing international warfare, and generating AI-powered strategic intelligence briefings with advanced RAG (Retrieval-Augmented Generation) capabilities. ",
-      githubUrl: "https://fogreport.io",
-    },
-    {
-      title: "ArcanAI",
-      description:
-        "ArcanAI: Private, offline LLM for iOS. Run Ollama models (Phi-3, Mistral, Llama 3.1) on-device via Core ML. No sign-in, no internet after download, no tracking. Choose models at setup, chat with streaming responses. Encrypted, local-only. Apple Silicon. Powered by swift-transformers. MIT license.",
-      githubUrl: "https://github.com/Jacksongio/arcan_ai.git",
-    },
-    {
-      title: "GioBlockchain",
-      description:
-        "This Python-based blockchain implementation demonstrates core principles like block hashing and chain validation while featuring advanced functionalities such as smart contracts, transaction validation, and decentralized networking. It simulates real-world blockchains like Bitcoin and Ethereum for learning and exploration.",
-      color: "from-yellow-400 to-orange-500",
-      githubUrl: "https://github.com/jacksongio/GioBlockchain",
-    },
-    {
-      title: "CryptoAnalyzer",
-      description:
-        "This project is a C-based application designed to read, parse, and analyze historical cryptocurrency data from a CSV file. The program calculates and outputs key statistics such as the average, minimum, and maximum values of cryptocurrency prices over time. This tool is especially useful for understanding trends and making data-driven decisions in cryptocurrency trading.",
-      color: "from-green-400 to-blue-500",
-      githubUrl: "https://github.com/jacksongio/CryptoAnalyzer",
-    },
-    {
-      title: "miniZip",
-      description:
-        "miniZip is a minimal C ZIP archiver powered by zlib, reverse-engineered from WinZip’s compression logic. This lightweight CLI tool demonstrates writing local file headers, compressing data, assembling the central directory, and finalizing with the End of Central Directory record—an ideal hands-on ZIP guide.",
-      color: "from-purple-400 to-pink-500",
-      githubUrl: "https://github.com/jacksongio/GioWorkout",
-    },
-    {
-      title: "GioGPT",
-      description:
-        "'GioGPT.com' is a website that is a personal chatbot. I personally trained this OpenAI API on my own dataset focused on sharp and straight to the point responses using the GPT 4o model. This chatbot has been designed to format Markdown output from the answers, thus permitting GioGPT to create code and answer complex questions.",
-      color: "from-orange-400 to-red-500",
-      githubUrl: "https://github.com/Jacksongio/GioGPT.git",
-    },
-    
-  ]
+"use client"
 
+import { useRef } from "react"
+import { ArrowUpRight } from "lucide-react"
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
+
+import { KineticHeading, SectionLabel } from "@/components/motion/primitives"
+import { projects } from "@/lib/site-content"
+
+const ACCENTS: Record<string, string> = {
+  lime: "bg-acid text-ink",
+  violet: "bg-electric text-paper",
+  cyan: "bg-cyan text-ink",
+  orange: "bg-orange-400 text-ink",
+  pink: "bg-pink-400 text-ink",
+  blue: "bg-blue-500 text-paper",
+}
+
+function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
   return (
-    <section id="projects" className="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+    <a
+      href={project.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative flex min-h-[62svh] w-full shrink-0 flex-col overflow-hidden border border-paper/15 bg-ink/75 p-6 backdrop-blur-xl transition-colors hover:bg-paper/[0.06] sm:p-9 lg:h-[68svh] lg:w-[72vw] lg:max-w-[1100px] lg:p-12"
+    >
+      <div className="flex items-start justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/35">
+          Project / 0{index + 1}
+        </span>
+        <span
+          className={`grid h-12 w-12 place-items-center rounded-full transition-transform duration-500 group-hover:rotate-45 ${ACCENTS[project.color]}`}
+        >
+          <ArrowUpRight className="h-5 w-5" />
+        </span>
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-light bg-gradient-to-r from-white via-purple-100 to-blue-100 bg-clip-text text-transparent mb-4 drop-shadow-lg">
-            Coding Projects
-          </h2>
-          <p className="text-xl text-gray-200">A showcase of my technical work and personal projects</p>
+      <div className="mt-auto">
+        <h3 className="font-display text-[clamp(3.2rem,7vw,7.5rem)] font-medium leading-[0.82] tracking-[-0.075em]">
+          {project.title}
+        </h3>
+        <div className="mt-8 grid gap-7 border-t border-paper/15 pt-6 sm:grid-cols-[1fr_auto]">
+          <p className="max-w-xl text-sm leading-7 text-paper/55">{project.description}</p>
+          <div className="flex flex-wrap content-start gap-2 sm:max-w-[260px] sm:justify-end">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-paper/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-paper/55"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <span
+        aria-hidden="true"
+        className={`absolute -bottom-24 -right-16 h-64 w-64 rounded-full opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-20 ${ACCENTS[project.color]}`}
+      />
+    </a>
+  )
+}
+
+export function ProjectsSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  })
+  const x = useTransform(scrollYProgress, [0.08, 0.94], ["0vw", "-365vw"])
+  const progress = useTransform(scrollYProgress, [0.05, 0.95], ["0%", "100%"])
+
+  return (
+    <section id="projects" ref={sectionRef} className="chapter-shell border-b border-paper/10 lg:h-[520vh]">
+      <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32 lg:hidden">
+        <SectionLabel index="03">Selected work</SectionLabel>
+        <KineticHeading>Ideas in motion.</KineticHeading>
+        <div className="mt-14 grid gap-5">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+
+      <div className="sticky top-0 hidden h-svh overflow-hidden lg:flex lg:flex-col lg:py-10">
+        <div className="flex items-end justify-between px-12">
+          <div>
+            <SectionLabel index="03" className="mb-4">Selected work</SectionLabel>
+            <KineticHeading className="text-[clamp(3rem,6vw,6.5rem)]">Ideas in motion.</KineticHeading>
+          </div>
+          <p className="mb-2 max-w-xs text-right text-sm leading-6 text-paper/45">
+            A selection of deployed products, experiments, and systems. Scroll to move sideways.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <motion.div
+          style={reducedMotion ? undefined : { x }}
+          className="mt-10 flex flex-1 items-stretch gap-6 pl-12"
+        >
           {projects.map((project, index) => (
-            <a
-              key={index}
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 overflow-hidden block cursor-pointer"
-            >
-              {/* Animated background gradient */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-              ></div>
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-5 blur-xl transition-opacity duration-500`}
-              ></div>
-
-              {/* Glowing border effect */}
-              <div
-                className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${project.color} opacity-0 group-hover:opacity-20 blur-sm transition-opacity duration-500`}
-              ></div>
-
-              <div className="relative z-10">
-                <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-white group-hover:to-gray-300 transition-all duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-gray-200 leading-relaxed group-hover:text-gray-100 transition-colors duration-300">
-                  {project.description}
-                </p>
-
-                {/* Hover indicator */}
-                <div className="mt-6 flex items-center text-sm text-gray-300 group-hover:text-white transition-colors duration-300">
-                  <span>View Project</span>
-                  <svg
-                    className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
-            </a>
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
+          <div className="w-[18vw] shrink-0" />
+        </motion.div>
+
+        <div className="mx-12 mt-6 h-px bg-paper/10">
+          <motion.div style={{ width: progress }} className="h-full bg-acid" />
         </div>
       </div>
     </section>

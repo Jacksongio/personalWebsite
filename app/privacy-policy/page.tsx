@@ -1,8 +1,20 @@
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto prose prose-slate dark:prose-invert">
-        <h1 className="text-4xl font-bold mb-8">Privacy Policy for ArcanAI</h1>
+    <div className="relative min-h-screen overflow-hidden bg-ink px-5 py-16 text-paper sm:px-8 sm:py-24">
+      <div className="story-grid pointer-events-none absolute inset-0 opacity-25" />
+      <div className="noise pointer-events-none fixed inset-0 opacity-[0.025]" />
+      <main className="relative mx-auto max-w-4xl border-x border-paper/10 bg-ink/80 px-5 py-8 text-sm leading-7 text-paper/60 backdrop-blur-sm sm:px-12 sm:py-14 sm:text-base [&_a]:text-acid [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-medium [&_h2]:tracking-[-0.04em] [&_h2]:text-paper [&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-medium [&_h3]:tracking-[-0.03em] [&_h3]:text-paper [&_h4]:text-paper [&_li]:marker:text-acid [&_p]:my-4 [&_strong]:text-paper/90">
+        <a
+          href="/"
+          className="mb-12 inline-flex items-center rounded-full border border-paper/15 px-4 py-2 font-mono text-[9px] uppercase tracking-[0.2em] text-paper/50 transition-colors hover:border-acid hover:text-acid"
+        >
+          ← Back
+        </a>
+        <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-acid">Legal / ArcanAI</p>
+        <h1 className="mb-8 mt-5 max-w-3xl font-display text-[clamp(3rem,8vw,6.8rem)] font-medium leading-[0.86] tracking-[-0.07em] text-paper">
+          Privacy Policy
+          <span className="outline-text block">for ArcanAI</span>
+        </h1>
         
         <p className="text-sm text-muted-foreground mb-8">Last updated: December 30, 2025</p>
 
@@ -228,7 +240,7 @@ export default function PrivacyPolicy() {
         <ul className="list-disc pl-6">
           <li>By email: jackson@giordano.us</li>
         </ul>
-      </div>
+      </main>
     </div>
   );
 }
