@@ -51,7 +51,14 @@ export const education: TimelineEntry[] = [
 
 export const experience: TimelineEntry[] = [
   {
-    period: "2025 — Present",
+    period: "2026 — Present",
+    title: "Junior Software Engineer",
+    org: "eve.ai",
+    description:
+      "Promoted into a client-facing engineering role supporting eve.ai through Proven AI, delivering production software across a range of contracts and evolving project requirements.",
+  },
+  {
+    period: "2025 — 2026",
     title: "Associate Software Engineer",
     org: "Proven AI",
     description:
@@ -64,52 +71,45 @@ export const experience: TimelineEntry[] = [
     description:
       "Performed IT security operations including incident response, security tool management, log analysis, and capability development in a dynamic enterprise environment.",
   },
-  {
-    period: "2022 — 2024",
-    title: "Assistant Facilities Manager",
-    org: "Revolution Sportsplex",
-    description:
-      "Maintained turf fields to pristine condition while handling staffing, equipment purchasing, and lighting schedules across the facility.",
-  },
 ]
 
 export const projects = [
   {
-    title: "FogReport.io",
-    description:
-      "A web application for simulating military conflict scenarios, analyzing international warfare, and generating AI-powered strategic intelligence briefings with advanced RAG capabilities.",
-    href: "https://fogreport.io",
-    tags: ["Next.js", "RAG", "LLM"],
-    color: "lime",
-  },
-  {
     title: "ArcanAI",
     description:
-      "A private, offline LLM for iOS. Runs Ollama models on-device via Core ML — no sign-in, no internet after download, no tracking. Encrypted and local-only.",
+      "A private, offline AI assistant for iOS that runs language models entirely on-device through Core ML. ArcanAI requires no account, works without an internet connection, and keeps every conversation encrypted and local.",
     href: "https://github.com/Jacksongio/arcan_ai.git",
     tags: ["Swift", "Core ML", "iOS"],
     color: "violet",
   },
   {
-    title: "GioBlockchain",
+    title: "FogReport.io",
     description:
-      "A Python blockchain implementation demonstrating block hashing and chain validation, with smart contracts, transaction validation, and decentralized networking.",
-    href: "https://github.com/jacksongio/GioBlockchain",
-    tags: ["Python", "Cryptography"],
+      "An AI-powered platform for modeling military conflicts, examining geopolitical scenarios, and producing strategic intelligence briefings grounded in a retrieval-augmented knowledge base.",
+    href: "https://fogreport.io",
+    tags: ["Next.js", "RAG", "LLM"],
+    color: "lime",
+  },
+  {
+    title: "StudiumVerbi",
+    description:
+      "A Catholic study companion for exploring Sacred Scripture, Sacred Tradition, and the teachings of the Magisterium, using retrieval-augmented generation over the Bible to provide grounded, context-rich guidance.",
+    href: "https://studiumverbi.com",
+    tags: ["Catholic", "RAG", "Scripture"],
     color: "cyan",
   },
   {
-    title: "CryptoAnalyzer",
+    title: "The Giordanos",
     description:
-      "A C application that parses and analyzes historical cryptocurrency data, calculating price statistics over time to surface market trends.",
-    href: "https://github.com/jacksongio/CryptoAnalyzer",
-    tags: ["C", "Data Analysis"],
+      "A polished wedding website combining complete RSVP management with interactive cocktail recommendations and a Spotify-powered song request experience for guests.",
+    href: "https://thegiordanos.net",
+    tags: ["Next.js", "RSVP", "Spotify"],
     color: "orange",
   },
   {
     title: "miniZip",
     description:
-      "A minimal C ZIP archiver powered by zlib, reverse-engineered from WinZip's compression logic and assembled from the file format upward.",
+      "A compact ZIP archiver written in C with zlib, built from the file format upward to handle compression, local headers, central directory records, and archive finalization.",
     href: "https://github.com/jacksongio/GioWorkout",
     tags: ["C", "zlib"],
     color: "pink",
@@ -117,9 +117,9 @@ export const projects = [
   {
     title: "GioGPT",
     description:
-      "A personal chatbot trained on my own dataset for sharp, direct responses using GPT-4o, with rich Markdown and code output.",
+      "An early personal AI assistant customized on my own dataset to deliver direct, context-aware responses with rich Markdown formatting and code generation.",
     href: "https://github.com/Jacksongio/GioGPT.git",
-    tags: ["OpenAI", "Next.js"],
+    tags: ["Archived", "OpenAI", "Next.js"],
     color: "blue",
   },
 ] as const

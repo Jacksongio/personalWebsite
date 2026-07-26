@@ -4,7 +4,6 @@ import { StatsSection } from "@/components/stats-section"
 import { ExperienceSection } from "@/components/experience-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
-import { Footer } from "@/components/footer"
 import { ScrollStory } from "@/components/scroll/scroll-story"
 
 export default function Home() {
@@ -21,9 +20,6 @@ export default function Home() {
             <ContactSection />
           </div>
         </main>
-        <div className="relative z-10">
-          <Footer />
-        </div>
       </div>
     </ScrollStory>
   )

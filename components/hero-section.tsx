@@ -125,12 +125,6 @@ export function HeroSection() {
             </div>
           </div>
 
-          <motion.div
-            style={reducedMotion ? undefined : { opacity: edgeOpacity }}
-            className="absolute bottom-7 left-5 hidden items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-paper/35 sm:left-auto sm:right-8 sm:flex lg:right-12"
-          >
-            Scroll to explore <span className="h-px w-12 bg-paper/25" />
-          </motion.div>
         </div>
       </section>
     </>
