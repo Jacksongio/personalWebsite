@@ -191,12 +191,41 @@ html.lenis body {
 .corridor-scrim {
   background:
     radial-gradient(
-      ellipse 42% 46% at 50% 46%,
-      rgba(5, 5, 10, 0.82),
-      rgba(5, 5, 10, 0.45) 55%,
+      ellipse 38% 42% at 50% 46%,
+      rgba(5, 5, 10, 0.45),
+      rgba(5, 5, 10, 0.18) 55%,
       transparent 78%
     ),
-    radial-gradient(ellipse at center, transparent 62%, rgba(5, 5, 10, 0.55) 100%);
+    radial-gradient(ellipse at center, transparent 68%, rgba(5, 5, 10, 0.35) 100%);
+}
+
+.star-field__dot {
+  position: absolute;
+  border-radius: 9999px;
+  background: #f4f7ff;
+  box-shadow: 0 0 6px rgba(199, 255, 94, 0.35);
+  transform: translate(-50%, -50%);
+  animation-name: star-twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-field__dot {
+    animation: none;
+  }
 }
 
 /* Film grain overlay for the hero */

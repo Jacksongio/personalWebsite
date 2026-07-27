@@ -5,7 +5,6 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import type { MotionValue } from "motion/react"
 
-import { BoxCorridor } from "./box-corridor"
 import { DEPTH, type CorridorState } from "./corridor-shaders"
 import { DustField } from "./dust-field"
 
@@ -92,13 +91,11 @@ function CorridorDriver({
 export default function CorridorScene({
   scrollY,
   storyProgress,
-  boxCount,
   dustCount,
   mobile = false,
 }: {
   scrollY: MotionValue<number>
   storyProgress: MotionValue<number>
-  boxCount: number
   dustCount: number
   mobile?: boolean
 }) {
@@ -121,29 +118,21 @@ export default function CorridorScene({
   return (
     <Canvas
       dpr={mobile ? [1, 1.25] : [1, 1.65]}
-      // MSAA is on here despite the cost: the box edges are thin, high-contrast
-      // and in constant motion, which is the worst case for aliasing. Without it
-      // the edges crawl and shimmer, which reads as the whole thing juddering.
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       camera={{
         position: [0, 0, 0],
-        // Tilted off-axis so the vanishing point — where box density is highest
-        // — sits away from the centred text column.
-        //
-        // Passing `rotation` here is also load-bearing: r3f calls
+        // Passing `rotation` here is load-bearing: r3f calls
         // `camera.lookAt(0,0,0)` unless the camera options include a rotation,
         // and with the camera AT the origin that is a zero-length direction
         // vector and a degenerate matrix.
         rotation: [THREE.MathUtils.degToRad(5), THREE.MathUtils.degToRad(-8), 0],
         fov: 55,
         near: 0.1,
-        // `far` must exceed DEPTH or the far end of the corridor is clipped.
         far: 200,
       }}
     >
       <CorridorDriver scrollY={scrollY} storyProgress={storyProgress} state={state} />
-      <BoxCorridor count={boxCount} state={state} />
-      <DustField count={dustCount} state={state} mobile={mobile} />
+      <DustField count={dustCount} state={state} />
     </Canvas>
   )
 }

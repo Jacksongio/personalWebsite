@@ -13,8 +13,8 @@ import {
 } from "./corridor-shaders"
 import { makeRandom } from "./random"
 
-const DUST_COLOR = new THREE.Color("#c7d2fe")
-const DUST_END = new THREE.Color("#c7ff5e")
+const DUST_COLOR = new THREE.Color("#ffffff")
+const DUST_END = new THREE.Color("#e6ff8a")
 
 /**
  * Fine dust drifting between the boxes. The corridor wrap happens entirely in
@@ -25,11 +25,9 @@ const DUST_END = new THREE.Color("#c7ff5e")
 export function DustField({
   count,
   state,
-  mobile = false,
 }: {
   count: number
   state: CorridorState
-  mobile?: boolean
 }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null)
   const size = useThree((s) => s.size)
@@ -44,12 +42,11 @@ export function DustField({
       // x/y are a unit-circle direction here — the shader multiplies them by
       // depth to place the dust on the same cone the boxes travel.
       const theta = random() * Math.PI * 2
-      const radius = (0.35 + random() * 1.15) * 0.55
+      const radius = (0.25 + random() * 0.95) * 0.5
       positions[i * 3] = Math.cos(theta) * radius
       positions[i * 3 + 1] = Math.sin(theta) * radius
       positions[i * 3 + 2] = random() * DEPTH
-
-      scales[i] = 0.4 + random() * 1.2
+      scales[i] = 0.7 + random() * 1.5
     }
 
     const geo = new THREE.BufferGeometry()
@@ -62,15 +59,16 @@ export function DustField({
     () => ({
       uTravel: { value: 0 },
       uSpeed: { value: 0 },
-      uSize: { value: mobile ? 10 : 26 },
-      uMaxSize: { value: mobile ? 1.8 : 4.5 },
+      // Same on-screen size everywhere (former MacBook desktop look, bumped).
+      uSize: { value: 48 },
+      uMaxSize: { value: 10 },
       uPixelRatio: { value: 1 },
       uDepth: { value: DEPTH },
       uZBehind: { value: Z_BEHIND },
       uViewportScale: { value: new THREE.Vector2(1, 1) },
-      uColor: { value: DUST_COLOR },
+      uColor: { value: DUST_COLOR.clone() },
     }),
-    [mobile],
+    [],
   )
 
   useFrame(() => {
@@ -78,7 +76,7 @@ export function DustField({
     if (!material || !state.active) return
     material.uniforms.uTravel.value = state.travel
     material.uniforms.uSpeed.value = state.speed
-    material.uniforms.uPixelRatio.value = gl.getPixelRatio()
+    material.uniforms.uPixelRatio.value = Math.min(gl.getPixelRatio(), 2)
     const aspect = size.width / size.height
     material.uniforms.uViewportScale.value.set(Math.max(aspect, 1), Math.min(aspect, 1))
     material.uniforms.uColor.value.lerpColors(DUST_COLOR, DUST_END, state.sceneProgress)
@@ -93,7 +91,7 @@ export function DustField({
         fragmentShader={DUST_FRAGMENT}
         transparent
         depthWrite={false}
-        depthTest
+        depthTest={false}
         blending={THREE.AdditiveBlending}
       />
     </points>

@@ -6,6 +6,7 @@ import Image from "next/image"
 import { ArrowDownRight, ArrowUpRight } from "lucide-react"
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 
+import { StarField } from "@/components/hero/star-field"
 import { MagneticLink } from "@/components/motion/primitives"
 import { useScrollStory } from "@/components/scroll/scroll-story"
 import { profile } from "@/lib/site-content"
@@ -15,9 +16,9 @@ const CorridorScene = dynamic(() => import("@/components/hero/corridor-scene"), 
 })
 
 const TIERS = {
-  mobile: { boxes: 48, dust: 220, mobile: true },
-  low: { boxes: 100, dust: 700, mobile: false },
-  full: { boxes: 170, dust: 1050, mobile: false },
+  mobile: { dust: 220, mobile: true },
+  low: { dust: 700, mobile: false },
+  full: { dust: 1050, mobile: false },
 } as const
 
 export function HeroSection() {
@@ -38,11 +39,10 @@ export function HeroSection() {
   const edgeOpacity = useTransform(scrollYProgress, [0.55, 1], [1, 0])
 
   useEffect(() => {
-    if (reducedMotion) return
     const cores = navigator.hardwareConcurrency ?? 4
     const narrow = window.matchMedia("(max-width: 768px)").matches
     setTier(narrow ? TIERS.mobile : cores <= 4 ? TIERS.low : TIERS.full)
-  }, [reducedMotion])
+  }, [])
 
   return (
     <>
@@ -55,12 +55,13 @@ export function HeroSection() {
           <CorridorScene
             scrollY={scrollY}
             storyProgress={chapter}
-            boxCount={tier.boxes}
             dustCount={tier.dust}
             mobile={tier.mobile}
           />
         )}
         <div className="corridor-scrim absolute inset-0" />
+        {/* CSS glitter — always visible on Windows when WebGL point size is clamped */}
+        <StarField count={160} />
         <div className="story-grid absolute inset-0 opacity-30" />
         <div className="noise absolute inset-0 opacity-[0.035] mix-blend-soft-light" />
       </div>

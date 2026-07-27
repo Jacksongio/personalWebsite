@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { useLenis } from "lenis/react"
 import { ArrowRight, ArrowUpRight, Github, X } from "lucide-react"
 import {
   AnimatePresence,
@@ -86,11 +87,15 @@ function MoreProjectsButton({ onClick, className = "" }: { onClick: () => void; 
 function RepositoryOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const reducedMotion = useReducedMotion()
+  const lenis = useLenis()
 
   useEffect(() => {
     if (!open) return
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
+    // Pause page smooth-scroll only while this white overlay is open so its
+    // own overflow can receive the wheel. Main projects scrolling is untouched.
+    lenis?.stop()
     document.documentElement.dataset.repositoryOverlay = "open"
     window.dispatchEvent(new CustomEvent("repository-overlay", { detail: { open: true } }))
     closeButtonRef.current?.focus()
@@ -101,11 +106,12 @@ function RepositoryOverlay({ open, onClose }: { open: boolean; onClose: () => vo
     window.addEventListener("keydown", handleKeyDown)
     return () => {
       document.body.style.overflow = previousOverflow
+      lenis?.start()
       delete document.documentElement.dataset.repositoryOverlay
       window.dispatchEvent(new CustomEvent("repository-overlay", { detail: { open: false } }))
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [open, onClose])
+  }, [open, onClose, lenis])
 
   return (
     <AnimatePresence>
@@ -114,11 +120,12 @@ function RepositoryOverlay({ open, onClose }: { open: boolean; onClose: () => vo
           role="dialog"
           aria-modal="true"
           aria-labelledby="repository-title"
+          data-lenis-prevent
           initial={reducedMotion ? { opacity: 0 } : { clipPath: "circle(0% at 88% 12%)" }}
           animate={reducedMotion ? { opacity: 1 } : { clipPath: "circle(150% at 88% 12%)" }}
           exit={reducedMotion ? { opacity: 0 } : { clipPath: "circle(0% at 88% 12%)" }}
           transition={{ duration: reducedMotion ? 0.15 : 0.85, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[100] overflow-y-auto bg-paper text-ink"
+          className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-paper text-ink"
         >
           <div className="story-grid pointer-events-none fixed inset-0 opacity-25" />
           <div className="relative mx-auto min-h-full max-w-[1600px] px-5 py-6 sm:px-8 sm:py-8 lg:px-12">
@@ -202,18 +209,54 @@ function RepositoryOverlay({ open, onClose }: { open: boolean; onClose: () => vo
 
 export function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const [showRepositories, setShowRepositories] = useState(false)
+  const [endX, setEndX] = useState(0)
   const reducedMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   })
-  const x = useTransform(scrollYProgress, [0.08, 0.94], ["0vw", "-365vw"])
+  // End translation is measured so the track stops on GioGPT (last card),
+  // instead of overshooting with a hard-coded vw distance.
+  const x = useTransform(scrollYProgress, [0.08, 0.92], [0, endX])
   const progress = useTransform(scrollYProgress, [0.05, 0.95], ["0%", "100%"])
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const measure = () => {
+      const sticky = track.parentElement
+      if (!sticky) return
+      // Leave a small right pad so the last card isn't flush against the edge.
+      const pad = 48
+      setEndX(Math.min(0, sticky.clientWidth - track.scrollWidth - pad))
+    }
+
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(track)
+    window.addEventListener("resize", measure)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("resize", measure)
+    }
+  }, [])
 
   return (
     <>
-      <section id="projects" ref={sectionRef} className="chapter-shell border-b border-paper/10 lg:h-[520vh]">
+      <section
+        id="projects"
+        ref={sectionRef}
+        className="chapter-shell border-b border-paper/10 lg:h-[calc(100vh+var(--projects-scroll,350vh))]"
+        style={
+          {
+            // Stick for one viewport, then scroll-travel scales with card count.
+            "--projects-scroll": `${Math.max(projects.length - 1, 1) * 70}vh`,
+          } as CSSProperties
+        }
+      >
         <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32 lg:hidden">
           <SectionLabel index="03">Selected work</SectionLabel>
           <KineticHeading>Ideas in motion.</KineticHeading>
@@ -242,13 +285,13 @@ export function ProjectsSection() {
           </div>
 
           <motion.div
+            ref={trackRef}
             style={reducedMotion ? undefined : { x }}
-            className="mt-10 flex flex-1 items-stretch gap-6 pl-12"
+            className="mt-10 flex flex-1 items-stretch gap-6 pl-12 pr-12"
           >
             {projects.map((project, index) => (
               <ProjectCard key={project.title} project={project} index={index} />
             ))}
-            <div className="w-[18vw] shrink-0" />
           </motion.div>
 
           <div className="mx-12 mt-6 h-px bg-paper/10">

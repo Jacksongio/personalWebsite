@@ -5,7 +5,7 @@ export const profile = {
   location: "Washington, DC",
   email: "jackson@giordano.us",
   blurb:
-    "Computer Science graduate from Virginia Tech's College of Engineering and a Junior Software Engineer at eve.ai, working through Proven AI. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering. Always learning and open to collaboration.",
+    "Computer Science graduate from Virginia Tech's College of Engineering and a Junior Software Engineer at eve.ai. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering. Always learning and open to collaboration.",
   resume: "/resume.pdf",
   github: "https://github.com/jacksongio",
   linkedin: "https://www.linkedin.com/in/jacksongio",
@@ -78,8 +78,8 @@ export const projects = [
     title: "ArcanAI",
     description:
       "A private, offline AI assistant for iOS that runs language models entirely on-device through Core ML. ArcanAI requires no account, works without an internet connection, and keeps every conversation encrypted and local.",
-    href: "https://github.com/Jacksongio/arcan_ai.git",
-    tags: ["Swift", "Core ML", "iOS"],
+    href: "https://apps.apple.com/us/app/arcanai/id6768841547",
+    tags: ["React Native", "Core ML", "iOS"],
     color: "violet",
   },
   {
