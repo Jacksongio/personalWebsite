@@ -2,7 +2,7 @@ export const profile = {
   name: "Jackson Giordano",
   role: "Software Engineer",
   company: "Proven AI",
-  location: "Reston, Virginia",
+  location: "Washington, DC",
   email: "jackson@giordano.us",
   blurb:
     "Computer Science graduate from Virginia Tech's College of Engineering and a Junior Software Engineer at eve.ai, working through Proven AI. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering. Always learning and open to collaboration.",
@@ -55,7 +55,7 @@ export const experience: TimelineEntry[] = [
     title: "Junior Software Engineer",
     org: "eve.ai",
     description:
-      "Promoted into a client-facing engineering role supporting eve.ai through Proven AI, delivering production software across a range of contracts and evolving project requirements.",
+      "Promoted into a client-facing AI engineering role supporting eve.ai through Proven AI. Fine-tuned models, implemented retrieval-augmented generation systems, and worked with vision-language models to deliver production solutions across diverse contracts.",
   },
   {
     period: "2025 — 2026",
@@ -110,7 +110,7 @@ export const projects = [
     title: "miniZip",
     description:
       "A compact ZIP archiver written in C with zlib, built from the file format upward to handle compression, local headers, central directory records, and archive finalization.",
-    href: "https://github.com/jacksongio/GioWorkout",
+    href: "https://github.com/Jacksongio/miniZip",
     tags: ["C", "zlib"],
     color: "pink",
   },
@@ -122,6 +122,22 @@ export const projects = [
     tags: ["Archived", "OpenAI", "Next.js"],
     color: "blue",
   },
+] as const
+
+export const otherRepositories = [
+  { name: "GioPrompt", href: "https://github.com/Jacksongio/GioPrompt" },
+  { name: "Personal Website", href: "https://github.com/Jacksongio/personalWebsite" },
+  { name: "Jackson Is Really Bored", href: "https://github.com/Jacksongio/jackson_is_bored" },
+  { name: "Fantasy Football AI", href: "https://github.com/Jacksongio/fantasy_football_ai" },
+  { name: "LLM Fact Maker", href: "https://github.com/Jacksongio/M4_llm_fact_maker" },
+  { name: "Eliza Bot", href: "https://github.com/Jacksongio/eliza" },
+  { name: "Macintosh Portfolio", href: "https://github.com/Jacksongio/jacksongio.com" },
+  { name: "CryptoAnalyzer", href: "https://github.com/Jacksongio/CryptoAnalyzer" },
+  { name: "Flappy Dad", href: "https://github.com/Jacksongio/flappyDad" },
+  { name: "White Wine and Claret", href: "https://github.com/Jacksongio/whitewine-claret" },
+  { name: "GioBlockchain", href: "https://github.com/Jacksongio/GioBlockchain" },
+  { name: "GioWorkout", href: "https://github.com/Jacksongio/GioWorkout" },
+  { name: "Giordano Family Website", href: "https://github.com/Jacksongio/giordano.us" },
 ] as const
 
 export const navItems = [

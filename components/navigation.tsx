@@ -17,10 +17,13 @@ export function Navigation() {
   const reducedMotion = useReducedMotion()
   const [hidden, setHidden] = useState(false)
   const [active, setActive] = useState("about")
+  const [repositoryOverlayOpen, setRepositoryOverlayOpen] = useState(false)
   const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 30, mass: 0.3 })
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (reducedMotion) return
+    if (reducedMotion || repositoryOverlayOpen || document.documentElement.dataset.repositoryOverlay) {
+      return
+    }
     const previous = scrollY.getPrevious() ?? 0
     setHidden(latest > previous && latest > window.innerHeight * 0.7)
   })
@@ -40,6 +43,22 @@ export function Navigation() {
     )
     sections.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const handleOverlay = (event: Event) => {
+      const open = (event as CustomEvent<{ open: boolean }>).detail.open
+      setRepositoryOverlayOpen(open)
+      if (open) {
+        setHidden(true)
+      } else {
+        setActive("projects")
+        setHidden(false)
+      }
+    }
+
+    window.addEventListener("repository-overlay", handleOverlay)
+    return () => window.removeEventListener("repository-overlay", handleOverlay)
   }, [])
 
   return (

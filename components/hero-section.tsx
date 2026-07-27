@@ -75,7 +75,7 @@ export function HeroSection() {
             <p>
               Portfolio / 2026
               <br />
-              Reston, Virginia
+              {profile.location}
             </p>
             <p className="flex items-center gap-2 text-right">
               <span className="h-2 w-2 animate-pulse rounded-full bg-acid" />
