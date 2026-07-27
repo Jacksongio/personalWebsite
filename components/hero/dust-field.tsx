@@ -25,9 +25,11 @@ const DUST_END = new THREE.Color("#c7ff5e")
 export function DustField({
   count,
   state,
+  mobile = false,
 }: {
   count: number
   state: CorridorState
+  mobile?: boolean
 }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null)
   const size = useThree((s) => s.size)
@@ -60,14 +62,15 @@ export function DustField({
     () => ({
       uTravel: { value: 0 },
       uSpeed: { value: 0 },
-      uSize: { value: 26 },
+      uSize: { value: mobile ? 10 : 26 },
+      uMaxSize: { value: mobile ? 1.8 : 4.5 },
       uPixelRatio: { value: 1 },
       uDepth: { value: DEPTH },
       uZBehind: { value: Z_BEHIND },
-      uRadialScale: { value: 1 },
+      uViewportScale: { value: new THREE.Vector2(1, 1) },
       uColor: { value: DUST_COLOR },
     }),
-    [],
+    [mobile],
   )
 
   useFrame(() => {
@@ -76,7 +79,8 @@ export function DustField({
     material.uniforms.uTravel.value = state.travel
     material.uniforms.uSpeed.value = state.speed
     material.uniforms.uPixelRatio.value = gl.getPixelRatio()
-    material.uniforms.uRadialScale.value = Math.min(size.width / size.height, 1)
+    const aspect = size.width / size.height
+    material.uniforms.uViewportScale.value.set(Math.max(aspect, 1), Math.min(aspect, 1))
     material.uniforms.uColor.value.lerpColors(DUST_COLOR, DUST_END, state.sceneProgress)
   })
 

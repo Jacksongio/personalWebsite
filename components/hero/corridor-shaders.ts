@@ -131,10 +131,11 @@ export const DUST_VERTEX = /* glsl */ `
 uniform float uTravel;
 uniform float uSpeed;
 uniform float uSize;
+uniform float uMaxSize;
 uniform float uPixelRatio;
 uniform float uDepth;
 uniform float uZBehind;
-uniform float uRadialScale;
+uniform vec2 uViewportScale;
 
 attribute float aScale;
 
@@ -151,12 +152,13 @@ void main() {
   // Cone placement: radius grows with distance so the corridor keeps a constant
   // angular hole down its centre instead of converging on the vanishing point.
   float dist = max(-pos.z, 0.001);
-  pos.xy *= dist * uRadialScale;
+  pos.xy *= dist * uViewportScale;
 
   vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
   gl_Position = projectionMatrix * mvPosition;
 
-  gl_PointSize = uSize * aScale * uPixelRatio * (1.0 / max(-mvPosition.z, 0.001));
+  float pointSize = uSize * aScale * uPixelRatio * (1.0 / max(-mvPosition.z, 0.001));
+  gl_PointSize = min(pointSize, uMaxSize * uPixelRatio);
 
   vFade = smoothstep(0.0, 18.0, dist) * smoothstep(uDepth, uDepth * 0.6, dist);
   // Dust is additive on top of the edge glow, so it stays faint by default and
