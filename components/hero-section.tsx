@@ -47,7 +47,7 @@ export function HeroSection() {
   return (
     <>
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(94,231,247,.13),transparent_28%),radial-gradient(circle_at_82%_24%,rgba(139,92,246,.2),transparent_34%),radial-gradient(circle_at_54%_88%,rgba(199,255,94,.08),transparent_32%),#050507]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(94,231,247,.07),transparent_32%),radial-gradient(circle_at_82%_24%,rgba(139,92,246,.1),transparent_38%),radial-gradient(circle_at_54%_88%,rgba(199,255,94,.04),transparent_36%),#050507]" />
         {tier && (
           <CorridorScene
             scrollY={scrollY}
@@ -88,7 +88,7 @@ export function HeroSection() {
             className="my-auto origin-center py-12"
           >
             <p className="mb-3 ml-[1vw] font-mono text-[10px] uppercase tracking-[0.32em] text-acid">
-              Software engineer / AI builder
+              Software engineer / AI engineer
             </p>
             <h1 className="font-display text-[clamp(4.2rem,14.4vw,13.5rem)] font-medium leading-[0.72] tracking-[-0.09em] text-paper">
               <span className="block">JACKSON</span>

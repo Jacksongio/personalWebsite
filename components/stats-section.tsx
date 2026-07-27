@@ -63,7 +63,7 @@ export function StatsSection() {
           style={reducedMotion ? undefined : { x: reverseX }}
           className="w-max whitespace-nowrap font-mono text-xs uppercase tracking-[0.28em] sm:text-sm"
         >
-          {"SOFTWARE / AI / SYSTEMS / CREATIVE CODE / ".repeat(5)}
+          {"SOLUTIONS / SOFTWARE / RAG / FINE-TUNING / AGENTIC AI / ".repeat(5)}
         </motion.div>
       </div>
     </section>

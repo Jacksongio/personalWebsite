@@ -5,7 +5,7 @@ export const profile = {
   location: "Reston, Virginia",
   email: "jackson@giordano.us",
   blurb:
-    "Computer Science graduate from Virginia Tech's College of Engineering and an Associate Software Engineer at Proven AI. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering — always learning, always up for a collaboration.",
+    "Computer Science graduate from Virginia Tech's College of Engineering and a Junior Software Engineer at eve.ai, working through Proven AI. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering. Always learning and open to collaboration.",
   resume: "/resume.pdf",
   github: "https://github.com/jacksongio",
   linkedin: "https://www.linkedin.com/in/jacksongio",
@@ -83,14 +83,6 @@ export const projects = [
     color: "violet",
   },
   {
-    title: "FogReport.io",
-    description:
-      "An AI-powered platform for modeling military conflicts, examining geopolitical scenarios, and producing strategic intelligence briefings grounded in a retrieval-augmented knowledge base.",
-    href: "https://fogreport.io",
-    tags: ["Next.js", "RAG", "LLM"],
-    color: "lime",
-  },
-  {
     title: "StudiumVerbi",
     description:
       "A Catholic study companion for exploring Sacred Scripture, Sacred Tradition, and the teachings of the Magisterium, using retrieval-augmented generation over the Bible to provide grounded, context-rich guidance.",
@@ -105,6 +97,14 @@ export const projects = [
     href: "https://thegiordanos.net",
     tags: ["Next.js", "RSVP", "Spotify"],
     color: "orange",
+  },
+  {
+    title: "FogReport.io",
+    description:
+      "An AI-powered platform for modeling military conflicts, examining geopolitical scenarios, and producing strategic intelligence briefings grounded in a retrieval-augmented knowledge base.",
+    href: "https://fogreport.io",
+    tags: ["Next.js", "RAG", "LLM"],
+    color: "lime",
   },
   {
     title: "miniZip",
