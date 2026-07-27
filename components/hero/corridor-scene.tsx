@@ -143,7 +143,7 @@ export default function CorridorScene({
     >
       <CorridorDriver scrollY={scrollY} storyProgress={storyProgress} state={state} />
       <BoxCorridor count={boxCount} state={state} />
-      <DustField count={dustCount} state={state} />
+      <DustField count={dustCount} state={state} mobile={mobile} />
     </Canvas>
   )
 }

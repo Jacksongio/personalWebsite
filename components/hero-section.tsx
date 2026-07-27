@@ -15,7 +15,7 @@ const CorridorScene = dynamic(() => import("@/components/hero/corridor-scene"), 
 })
 
 const TIERS = {
-  mobile: { boxes: 56, dust: 380, mobile: true },
+  mobile: { boxes: 48, dust: 220, mobile: true },
   low: { boxes: 100, dust: 700, mobile: false },
   full: { boxes: 170, dust: 1050, mobile: false },
 } as const
@@ -46,7 +46,10 @@ export function HeroSection() {
 
   return (
     <>
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-y-0 left-0 z-0 w-screen overflow-hidden"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(94,231,247,.07),transparent_32%),radial-gradient(circle_at_82%_24%,rgba(139,92,246,.1),transparent_38%),radial-gradient(circle_at_54%_88%,rgba(199,255,94,.04),transparent_36%),#050507]" />
         {tier && (
           <CorridorScene
