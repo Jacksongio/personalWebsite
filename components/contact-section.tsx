@@ -5,15 +5,23 @@ import { ArrowRight, ArrowUpRight, Check } from "lucide-react"
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 
 import { SectionLabel } from "@/components/motion/primitives"
+import {
+  validateContact,
+  validateContactField,
+  type ContactField,
+  type ContactFieldErrors,
+} from "@/lib/contact-validation"
 import { profile, socials } from "@/lib/site-content"
 
 type SubmitState = "idle" | "sending" | "sent" | "error"
 
 export function ContactSection() {
   const ref = useRef<HTMLElement>(null)
+  const formStartedAt = useRef(Date.now())
   const reducedMotion = useReducedMotion()
   const [submitState, setSubmitState] = useState<SubmitState>("idle")
   const [errorMessage, setErrorMessage] = useState("")
+  const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({})
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end end"],
@@ -22,33 +30,101 @@ export function ContactSection() {
   const scale = useTransform(scrollYProgress, [0, 1], [0.76, 1])
   const y = useTransform(scrollYProgress, [0, 1], [160, 0])
 
+  function handleFieldBlur(field: ContactField, value: string) {
+    const error = validateContactField(field, value)
+    setFieldErrors((current) => {
+      const next = { ...current }
+      if (error) next[field] = error
+      else delete next[field]
+      return next
+    })
+  }
+
+  function clearFieldError(field: ContactField) {
+    setFieldErrors((current) => {
+      if (!current[field]) return current
+      const next = { ...current }
+      delete next[field]
+      return next
+    })
+    if (submitState === "error") {
+      setSubmitState("idle")
+      setErrorMessage("")
+    }
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT
+    const form = event.currentTarget
+    const formData = new FormData(form)
 
-    if (!endpoint) {
+    if (String(formData.get("_gotcha") ?? "")) {
+      setSubmitState("sent")
+      return
+    }
+
+    const values = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+    }
+    const nextErrors = validateContact(values)
+
+    if (Object.keys(nextErrors).length) {
+      setFieldErrors(nextErrors)
       setSubmitState("error")
-      setErrorMessage(`The form is not configured yet. Please email ${profile.email}.`)
+      setErrorMessage("A few details need another pass.")
+      form.querySelector<HTMLElement>(`[name="${Object.keys(nextErrors)[0]}"]`)?.focus()
+      return
+    }
+
+    if (Date.now() - formStartedAt.current < 1800) {
+      setSubmitState("error")
+      setErrorMessage("That was suspiciously fast. Take a breath, then try again.")
+      return
+    }
+
+    const lastSubmit = Number(window.localStorage.getItem("portfolio-contact-last-submit") ?? 0)
+    if (Date.now() - lastSubmit < 60_000) {
+      setSubmitState("error")
+      setErrorMessage("Lightning round complete. Please wait a minute before sending another.")
       return
     }
 
     setSubmitState("sending")
     setErrorMessage("")
+    setFieldErrors({})
+    formData.set("name", values.name)
+    formData.set("email", values.email)
+    formData.set("message", values.message)
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        body: new FormData(event.currentTarget),
+        body: formData,
         headers: { Accept: "application/json" },
       })
 
-      if (!response.ok) throw new Error("Formspree rejected the submission")
+      const result = (await response.json().catch(() => ({}))) as { error?: string }
+      if (response.status === 429) {
+        setSubmitState("error")
+        setErrorMessage(
+          result.error ?? "Three messages in one day? I admire the enthusiasm. Try again tomorrow.",
+        )
+        return
+      }
+      if (!response.ok) throw new Error(result.error ?? "Contact request failed")
 
-      event.currentTarget.reset()
+      form.reset()
+      window.localStorage.setItem("portfolio-contact-last-submit", String(Date.now()))
       setSubmitState("sent")
-    } catch {
+    } catch (error) {
       setSubmitState("error")
-      setErrorMessage("That did not go through. Please try again or email me directly.")
+      setErrorMessage(
+        error instanceof Error && error.message !== "Contact request failed"
+          ? error.message
+          : "That did not go through. Please try again or email me directly.",
+      )
     }
   }
 
@@ -110,10 +186,16 @@ export function ContactSection() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="grid content-start gap-3" aria-label="Contact form">
+          <form
+            onSubmit={handleSubmit}
+            className="grid content-start gap-3"
+            aria-label="Contact form"
+            noValidate
+          >
             <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
+            <input type="hidden" name="_subject" value="New portfolio contact" />
             <div className="grid gap-3 sm:grid-cols-2">
-              <label className="group">
+              <label className="group relative pb-4">
                 <span className="mb-1.5 block font-mono text-[9px] uppercase tracking-[0.2em] text-ink/50">
                   Your name
                 </span>
@@ -122,11 +204,25 @@ export function ContactSection() {
                   name="name"
                   type="text"
                   autoComplete="name"
+                  minLength={2}
+                  maxLength={80}
                   placeholder="Jane Smith"
-                  className="h-11 w-full rounded-none border-0 border-b border-ink/25 bg-transparent px-0 text-sm text-ink outline-none placeholder:text-ink/30 focus:border-ink focus:ring-0"
+                  aria-invalid={Boolean(fieldErrors.name)}
+                  aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                  onBlur={(event) => handleFieldBlur("name", event.currentTarget.value)}
+                  onChange={() => clearFieldError("name")}
+                  className={`h-11 w-full rounded-none border-0 border-b bg-transparent px-0 text-sm text-ink outline-none placeholder:text-ink/30 focus:ring-0 ${
+                    fieldErrors.name ? "border-red-700 focus:border-red-700" : "border-ink/25 focus:border-ink"
+                  }`}
                 />
+                <span
+                  id="name-error"
+                  className="absolute bottom-0 left-0 font-mono text-[8px] tracking-[0.04em] text-red-800"
+                >
+                  {fieldErrors.name}
+                </span>
               </label>
-              <label className="group">
+              <label className="group relative pb-4">
                 <span className="mb-1.5 block font-mono text-[9px] uppercase tracking-[0.2em] text-ink/50">
                   Email address
                 </span>
@@ -135,12 +231,25 @@ export function ContactSection() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  maxLength={254}
                   placeholder="jane@company.com"
-                  className="h-11 w-full rounded-none border-0 border-b border-ink/25 bg-transparent px-0 text-sm text-ink outline-none placeholder:text-ink/30 focus:border-ink focus:ring-0"
+                  aria-invalid={Boolean(fieldErrors.email)}
+                  aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                  onBlur={(event) => handleFieldBlur("email", event.currentTarget.value)}
+                  onChange={() => clearFieldError("email")}
+                  className={`h-11 w-full rounded-none border-0 border-b bg-transparent px-0 text-sm text-ink outline-none placeholder:text-ink/30 focus:ring-0 ${
+                    fieldErrors.email ? "border-red-700 focus:border-red-700" : "border-ink/25 focus:border-ink"
+                  }`}
                 />
+                <span
+                  id="email-error"
+                  className="absolute bottom-0 left-0 font-mono text-[8px] tracking-[0.04em] text-red-800"
+                >
+                  {fieldErrors.email}
+                </span>
               </label>
             </div>
-            <label>
+            <label className="relative pb-4">
               <span className="mb-1.5 block font-mono text-[9px] uppercase tracking-[0.2em] text-ink/50">
                 What are you thinking?
               </span>
@@ -148,9 +257,23 @@ export function ContactSection() {
                 required
                 name="message"
                 rows={2}
+                minLength={20}
+                maxLength={2000}
                 placeholder="A few details about your project, role, or idea..."
-                className="min-h-16 w-full resize-none rounded-none border-0 border-b border-ink/25 bg-transparent px-0 py-2 text-sm leading-6 text-ink outline-none placeholder:text-ink/30 focus:border-ink focus:ring-0"
+                aria-invalid={Boolean(fieldErrors.message)}
+                aria-describedby={fieldErrors.message ? "message-error" : undefined}
+                onBlur={(event) => handleFieldBlur("message", event.currentTarget.value)}
+                onChange={() => clearFieldError("message")}
+                className={`min-h-16 w-full resize-none rounded-none border-0 border-b bg-transparent px-0 py-2 text-sm leading-6 text-ink outline-none placeholder:text-ink/30 focus:ring-0 ${
+                  fieldErrors.message ? "border-red-700 focus:border-red-700" : "border-ink/25 focus:border-ink"
+                }`}
               />
+              <span
+                id="message-error"
+                className="absolute bottom-0 left-0 font-mono text-[8px] tracking-[0.04em] text-red-800"
+              >
+                {fieldErrors.message}
+              </span>
             </label>
 
             <div className="flex min-h-10 items-center justify-between gap-4">
