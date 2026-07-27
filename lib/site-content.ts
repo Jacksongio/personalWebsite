@@ -55,7 +55,7 @@ export const experience: TimelineEntry[] = [
     title: "Junior Software Engineer",
     org: "eve.ai",
     description:
-      "Promoted into a client-facing AI engineering role supporting eve.ai through Proven AI. Fine-tuned models, implemented retrieval-augmented generation systems, and worked with vision-language models to deliver production solutions across diverse contracts.",
+      "Working in a client-facing AI engineering role supporting eve.ai through Proven AI. Fine-tuned models, implemented retrieval-augmented generation systems, and worked with vision-language models to deliver production solutions across diverse contracts.",
   },
   {
     period: "2025 — 2026",
