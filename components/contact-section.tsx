@@ -84,13 +84,6 @@ export function ContactSection() {
       return
     }
 
-    const lastSubmit = Number(window.localStorage.getItem("portfolio-contact-last-submit") ?? 0)
-    if (Date.now() - lastSubmit < 60_000) {
-      setSubmitState("error")
-      setErrorMessage("Lightning round complete. Please wait a minute before sending another.")
-      return
-    }
-
     setSubmitState("sending")
     setErrorMessage("")
     setFieldErrors({})
@@ -106,17 +99,9 @@ export function ContactSection() {
       })
 
       const result = (await response.json().catch(() => ({}))) as { error?: string }
-      if (response.status === 429) {
-        setSubmitState("error")
-        setErrorMessage(
-          result.error ?? "Three messages in one day? I admire the enthusiasm. Try again tomorrow.",
-        )
-        return
-      }
       if (!response.ok) throw new Error(result.error ?? "Contact request failed")
 
       form.reset()
-      window.localStorage.setItem("portfolio-contact-last-submit", String(Date.now()))
       setSubmitState("sent")
     } catch (error) {
       setSubmitState("error")

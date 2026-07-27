@@ -1,25 +1,9 @@
-import { createHmac } from "node:crypto"
-import { Ratelimit } from "@upstash/ratelimit"
-import { Redis } from "@upstash/redis"
 import { NextResponse } from "next/server"
 
 import { validateContact } from "@/lib/contact-validation"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
-
-const redisConfigured = Boolean(
-  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
-)
-
-const rateLimit = redisConfigured
-  ? new Ratelimit({
-      redis: Redis.fromEnv(),
-      limiter: Ratelimit.slidingWindow(3, "24 h"),
-      prefix: "portfolio:contact",
-      analytics: false,
-    })
-  : null
 
 function jsonError(error: string, status: number, headers?: HeadersInit) {
   return NextResponse.json({ error }, { status, headers })
@@ -35,12 +19,6 @@ function isSameOrigin(request: Request) {
   } catch {
     return false
   }
-}
-
-function getClientIp(request: Request) {
-  const forwarded =
-    request.headers.get("x-vercel-forwarded-for") ?? request.headers.get("x-forwarded-for")
-  return forwarded?.split(",")[0]?.trim() || null
 }
 
 function isFormspreeEndpoint(endpoint: string) {
@@ -81,32 +59,9 @@ export async function POST(request: Request) {
   }
 
   const endpoint = process.env.FORMSPREE_ENDPOINT
-  const salt = process.env.CONTACT_RATE_LIMIT_SALT
-  const ip = getClientIp(request)
 
-  if (!endpoint || !isFormspreeEndpoint(endpoint) || !rateLimit || !salt) {
+  if (!endpoint || !isFormspreeEndpoint(endpoint)) {
     return jsonError("The contact form is temporarily unavailable. Please use the email link.", 503)
-  }
-  if (!ip) {
-    return jsonError("Your network address could not be verified. Please use the email link.", 400)
-  }
-
-  // Hash the address before using it as a Redis key so raw visitor IPs are not stored.
-  const identifier = createHmac("sha256", salt).update(ip).digest("hex")
-  const limit = await rateLimit.limit(identifier)
-  const limitHeaders = {
-    "X-RateLimit-Limit": String(limit.limit),
-    "X-RateLimit-Remaining": String(limit.remaining),
-    "X-RateLimit-Reset": String(limit.reset),
-  }
-
-  if (!limit.success) {
-    const retryAfter = Math.max(1, Math.ceil((limit.reset - Date.now()) / 1000))
-    return jsonError(
-      "Three messages in one day? I admire the enthusiasm. Try again tomorrow.",
-      429,
-      { ...limitHeaders, "Retry-After": String(retryAfter) },
-    )
   }
 
   const outgoing = new FormData()
@@ -128,7 +83,7 @@ export async function POST(request: Request) {
       return jsonError("The message service is having a moment. Please try again shortly.", 502)
     }
 
-    return NextResponse.json({ ok: true }, { headers: limitHeaders })
+    return NextResponse.json({ ok: true })
   } catch {
     return jsonError("The message service is having a moment. Please try again shortly.", 502)
   }
