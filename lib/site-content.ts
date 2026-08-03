@@ -81,6 +81,7 @@ export const projects = [
     href: "https://apps.apple.com/us/app/arcanai/id6768841547",
     tags: ["React Native", "Core ML", "iOS"],
     color: "violet",
+    image: "/arcanai.png",
   },
   {
     title: "StudiumVerbi",
@@ -89,6 +90,7 @@ export const projects = [
     href: "https://studiumverbi.com",
     tags: ["Catholic", "RAG", "Scripture"],
     color: "cyan",
+    image: "/studiumverbi.png",
   },
   {
     title: "The Giordanos",
@@ -97,6 +99,7 @@ export const projects = [
     href: "https://thegiordanos.net",
     tags: ["Next.js", "RSVP", "Spotify"],
     color: "orange",
+    image: "/thegiordanos.png",
   },
   {
     title: "FogReport.io",
@@ -105,6 +108,7 @@ export const projects = [
     href: "https://fogreport.io",
     tags: ["Next.js", "RAG", "LLM"],
     color: "lime",
+    image: "/fogreport.png",
   },
   {
     title: "miniZip",
@@ -113,6 +117,7 @@ export const projects = [
     href: "https://github.com/Jacksongio/miniZip",
     tags: ["C", "zlib"],
     color: "pink",
+    image: "/miniZip.png",
   },
   {
     title: "GioGPT",
@@ -121,6 +126,7 @@ export const projects = [
     href: "https://github.com/Jacksongio/GioGPT.git",
     tags: ["Archived", "OpenAI", "Next.js"],
     color: "blue",
+    image: "/giogpt.png",
   },
 ] as const
 

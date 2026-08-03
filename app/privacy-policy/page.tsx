@@ -1,3 +1,24 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Privacy Policy for ArcanAI",
+  description:
+    "Privacy policy for ArcanAI, the offline on-device AI assistant by Jackson Giordano. Learn how ArcanAI handles data, privacy, and local processing.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+  openGraph: {
+    title: "Privacy Policy for ArcanAI · Jackson Giordano",
+    description:
+      "Privacy policy for ArcanAI, the offline on-device AI assistant by Jackson Giordano.",
+    url: "/privacy-policy",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
+
 export default function PrivacyPolicy() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-ink px-5 py-16 text-paper sm:px-8 sm:py-24">

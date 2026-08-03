@@ -277,9 +277,12 @@ export function ScrubbedReveal({
 export function KineticHeading({
   children,
   className,
+  immediate = false,
 }: {
   children: string
   className?: string
+  /** Animate on mount instead of while-in-view (needed for sticky top headers). */
+  immediate?: boolean
 }) {
   const reducedMotion = useReducedMotion()
 
@@ -291,14 +294,22 @@ export function KineticHeading({
       )}
       aria-label={children}
     >
-      {children.split(" ").map((word, index) => (
-        <span key={`${word}-${index}`} className="mr-[0.18em] inline-block overflow-hidden py-[0.08em]">
+      {children.trim().split(/\s+/).map((word, index) => (
+        // Extra bottom room so the reveal mask doesn't clip descenders (j, g, y).
+        <span
+          key={`${word}-${index}`}
+          className="mr-[0.18em] -mb-[0.14em] inline-block overflow-hidden pb-[0.22em] pt-[0.08em]"
+        >
           <motion.span
             aria-hidden="true"
             className="inline-block"
             initial={reducedMotion ? false : { y: "115%", rotate: 3 }}
-            whileInView={{ y: 0, rotate: 0 }}
-            viewport={{ once: true, margin: "-12%" }}
+            {...(immediate || reducedMotion
+              ? { animate: { y: 0, rotate: 0 } }
+              : {
+                  whileInView: { y: 0, rotate: 0 },
+                  viewport: { once: true, margin: "-12%" },
+                })}
             transition={{ duration: 0.9, delay: index * 0.055, ease: EASE }}
           >
             {word}

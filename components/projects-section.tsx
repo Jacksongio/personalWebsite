@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import Image from "next/image"
 import { useLenis } from "lenis/react"
 import { ArrowRight, ArrowUpRight, Github, X } from "lucide-react"
 import {
@@ -23,7 +24,47 @@ const ACCENTS: Record<string, string> = {
   blue: "bg-blue-500 text-paper",
 }
 
+function projectHost(href: string) {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "")
+  } catch {
+    return href
+  }
+}
+
+function WebsiteDemo({ src, href, title }: { src: string; href: string; title: string }) {
+  return (
+    <div className="relative mt-5 flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-xl border border-paper/15 bg-ink/80 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+      <div className="flex shrink-0 items-center gap-3 border-b border-paper/10 px-3 py-2.5">
+        <div className="flex gap-1.5" aria-hidden="true">
+          <span className="h-2 w-2 rounded-full bg-paper/25" />
+          <span className="h-2 w-2 rounded-full bg-paper/25" />
+          <span className="h-2 w-2 rounded-full bg-paper/25" />
+        </div>
+        <div className="min-w-0 flex-1 truncate rounded-full bg-paper/[0.06] px-3 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-paper/40">
+          {projectHost(href)}
+        </div>
+      </div>
+      <div className="relative min-h-[280px] w-full flex-1 overflow-hidden sm:min-h-[340px] lg:min-h-0">
+        <Image
+          src={src}
+          alt={`${title} website demo`}
+          fill
+          sizes="(max-width: 1024px) 100vw, 72vw"
+          className="object-cover object-top"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink/50 to-transparent"
+        />
+      </div>
+    </div>
+  )
+}
+
 function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
+  const image = "image" in project ? project.image : undefined
+
   return (
     <a
       href={project.href}
@@ -42,11 +83,19 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
         </span>
       </div>
 
-      <div className="mt-auto">
-        <h3 className="font-display text-[clamp(3.2rem,7vw,7.5rem)] font-medium leading-[0.82] tracking-[-0.075em]">
+      {image ? <WebsiteDemo src={image} href={project.href} title={project.title} /> : null}
+
+      <div className={`shrink-0 ${image ? "mt-5 pt-0" : "mt-auto pt-6"}`}>
+        <h3
+          className={`font-display font-medium leading-[0.82] tracking-[-0.075em] ${
+            image
+              ? "text-[clamp(2rem,3.8vw,3.6rem)]"
+              : "text-[clamp(3.2rem,7vw,7.5rem)]"
+          }`}
+        >
           {project.title}
         </h3>
-        <div className="mt-8 grid gap-7 border-t border-paper/15 pt-6 sm:grid-cols-[1fr_auto]">
+        <div className={`grid gap-7 border-t border-paper/15 sm:grid-cols-[1fr_auto] ${image ? "mt-4 pt-4" : "mt-6 pt-5 sm:mt-8 sm:pt-6"}`}>
           <p className="max-w-xl text-sm leading-7 text-paper/55">{project.description}</p>
           <div className="flex flex-wrap content-start gap-2 sm:max-w-[260px] sm:justify-end">
             {project.tags.map((tag) => (
@@ -259,7 +308,7 @@ export function ProjectsSection() {
       >
         <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32 lg:hidden">
           <SectionLabel index="03">Selected work</SectionLabel>
-          <KineticHeading>Ideas in motion.</KineticHeading>
+          <KineticHeading immediate>Projects</KineticHeading>
           <div className="mt-14 grid gap-5">
             {projects.map((project, index) => (
               <ProjectCard key={project.title} project={project} index={index} />
@@ -270,11 +319,13 @@ export function ProjectsSection() {
           </div>
         </div>
 
-        <div className="sticky top-0 hidden h-svh overflow-hidden lg:flex lg:flex-col lg:py-10">
-          <div className="flex items-end justify-between px-12">
+        <div className="sticky top-0 hidden h-svh lg:flex lg:flex-col lg:py-10">
+          <div className="flex shrink-0 items-end justify-between px-12">
             <div>
               <SectionLabel index="03" className="mb-4">Selected work</SectionLabel>
-              <KineticHeading className="text-[clamp(3rem,6vw,6.5rem)]">Ideas in motion.</KineticHeading>
+              <KineticHeading immediate className="text-[clamp(3rem,6vw,6.5rem)]">
+                Projects
+              </KineticHeading>
             </div>
             <div className="mb-2 flex max-w-xs flex-col items-end gap-4 text-right">
               <p className="text-sm leading-6 text-paper/45">
@@ -284,17 +335,19 @@ export function ProjectsSection() {
             </div>
           </div>
 
-          <motion.div
-            ref={trackRef}
-            style={reducedMotion ? undefined : { x }}
-            className="mt-10 flex flex-1 items-stretch gap-6 pl-12 pr-12"
-          >
-            {projects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} />
-            ))}
-          </motion.div>
+          <div className="mt-10 min-h-0 flex-1 overflow-hidden">
+            <motion.div
+              ref={trackRef}
+              style={reducedMotion ? undefined : { x }}
+              className="flex h-full items-stretch gap-6 pl-12 pr-12"
+            >
+              {projects.map((project, index) => (
+                <ProjectCard key={project.title} project={project} index={index} />
+              ))}
+            </motion.div>
+          </div>
 
-          <div className="mx-12 mt-6 h-px bg-paper/10">
+          <div className="mx-12 mt-6 h-px shrink-0 bg-paper/10">
             <motion.div style={{ width: progress }} className="h-full bg-acid" />
           </div>
         </div>
