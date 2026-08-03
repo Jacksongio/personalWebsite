@@ -10,6 +10,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Height-based variants for the desktop carousel: OS display scaling
+      // (125%/150%) shrinks the CSS viewport height, not the width. Declared
+      // after the width screens, widest range first, so the tighter tier wins.
+      screens: {
+        // Card switches to copy-beside-demo; a stacked demo goes too letterboxed.
+        hshort: { raw: "(max-height: 1000px) and (min-width: 1024px)" },
+        short: { raw: "(max-height: 820px) and (min-width: 1024px)" },
+        shorter: { raw: "(max-height: 640px) and (min-width: 1024px)" },
+      },
       fontFamily: {
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],

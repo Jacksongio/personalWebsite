@@ -34,8 +34,8 @@ function projectHost(href: string) {
 
 function WebsiteDemo({ src, href, title }: { src: string; href: string; title: string }) {
   return (
-    <div className="relative mt-5 flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-xl border border-paper/15 bg-ink/80 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
-      <div className="flex shrink-0 items-center gap-3 border-b border-paper/10 px-3 py-2.5">
+    <div className="relative flex h-full min-h-0 w-full flex-col overflow-hidden rounded-xl border border-paper/15 bg-ink/80 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+      <div className="flex shrink-0 items-center gap-3 border-b border-paper/10 px-3 py-2.5 short:py-1.5">
         <div className="flex gap-1.5" aria-hidden="true">
           <span className="h-2 w-2 rounded-full bg-paper/25" />
           <span className="h-2 w-2 rounded-full bg-paper/25" />
@@ -45,20 +45,47 @@ function WebsiteDemo({ src, href, title }: { src: string; href: string; title: s
           {projectHost(href)}
         </div>
       </div>
-      <div className="relative min-h-[280px] w-full flex-1 overflow-hidden sm:min-h-[340px] lg:min-h-0">
+      {/* Wide stacked frame can crop to fill; the narrower side-by-side frame
+          at short heights fits the whole screenshot instead. */}
+      <div className="relative min-h-[240px] w-full flex-1 overflow-hidden bg-ink sm:min-h-[300px] lg:min-h-0">
         <Image
           src={src}
           alt={`${title} website demo`}
           fill
-          sizes="(max-width: 1024px) 100vw, 72vw"
-          className="object-cover object-top"
+          sizes="(max-width: 1024px) 100vw, 60vw"
+          className="object-cover object-top hshort:object-contain"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink/50 to-transparent"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink/50 to-transparent hshort:hidden"
         />
       </div>
     </div>
+  )
+}
+
+function CardCopy({ project }: { project: (typeof projects)[number] }) {
+  return (
+    <>
+      <h3 className="font-display text-[clamp(1.75rem,3.8vw,3.6rem)] font-medium leading-[0.84] tracking-[-0.07em] hshort:text-[clamp(1.75rem,3vw,3.1rem)] short:text-[1.7rem]">
+        {project.title}
+      </h3>
+      <div className="mt-5 grid gap-7 border-t border-paper/15 pt-5 sm:grid-cols-[1fr_auto] hshort:grid-cols-1 hshort:gap-5 short:mt-3 short:gap-4 short:pt-3">
+        <p className="max-w-xl text-sm leading-7 text-paper/55 short:text-[0.8rem] short:leading-[1.5]">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap content-start gap-2 sm:max-w-[260px] sm:justify-end hshort:max-w-none hshort:justify-start">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-paper/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-paper/55"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -70,45 +97,53 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
       href={project.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex min-h-[62svh] w-full shrink-0 flex-col overflow-hidden border border-paper/15 bg-ink/75 p-6 backdrop-blur-xl transition-colors hover:bg-paper/[0.06] sm:p-9 lg:h-[68svh] lg:w-[72vw] lg:max-w-[1100px] lg:p-12"
+      className="group relative flex min-h-[62svh] w-full shrink-0 flex-col overflow-hidden border border-paper/15 bg-ink/75 p-6 backdrop-blur-xl transition-colors hover:bg-paper/[0.06] sm:p-9 lg:h-full lg:min-h-0 lg:w-[72vw] lg:max-w-[1100px] lg:p-12 short:p-6 shorter:p-4"
     >
-      <div className="flex items-start justify-between">
+      <div className="flex shrink-0 items-start justify-between">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/35">
           Project / 0{index + 1}
         </span>
         <span
-          className={`grid h-12 w-12 place-items-center rounded-full transition-transform duration-500 group-hover:rotate-45 ${ACCENTS[project.color]}`}
+          className={`grid h-12 w-12 place-items-center rounded-full transition-transform duration-500 group-hover:rotate-45 short:h-9 short:w-9 shorter:h-8 shorter:w-8 ${ACCENTS[project.color]}`}
         >
-          <ArrowUpRight className="h-5 w-5" />
+          <ArrowUpRight className="h-5 w-5 short:h-4 short:w-4" />
         </span>
       </div>
 
-      {image ? <WebsiteDemo src={image} href={project.href} title={project.title} /> : null}
-
-      <div className={`shrink-0 ${image ? "mt-5 pt-0" : "mt-auto pt-6"}`}>
-        <h3
-          className={`font-display font-medium leading-[0.82] tracking-[-0.075em] ${
-            image
-              ? "text-[clamp(2rem,3.8vw,3.6rem)]"
-              : "text-[clamp(3.2rem,7vw,7.5rem)]"
-          }`}
-        >
-          {project.title}
-        </h3>
-        <div className={`grid gap-7 border-t border-paper/15 sm:grid-cols-[1fr_auto] ${image ? "mt-4 pt-4" : "mt-6 pt-5 sm:mt-8 sm:pt-6"}`}>
-          <p className="max-w-xl text-sm leading-7 text-paper/55">{project.description}</p>
-          <div className="flex flex-wrap content-start gap-2 sm:max-w-[260px] sm:justify-end">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-paper/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-paper/55"
-              >
-                {tag}
-              </span>
-            ))}
+      {image ? (
+        // Tall viewports stack the demo above the copy. Short ones put the copy
+        // beside it, where the frame can use the card's full height and still
+        // show the whole screenshot.
+        <div className="mt-6 flex min-h-0 flex-1 flex-col gap-7 hshort:flex-row hshort:items-stretch hshort:gap-10 short:mt-4">
+          <div className="order-2 flex shrink-0 flex-col justify-center hshort:order-1 hshort:w-[38%]">
+            <CardCopy project={project} />
+          </div>
+          <div className="order-1 min-h-0 w-full flex-1 hshort:order-2 hshort:h-full">
+            <WebsiteDemo src={image} href={project.href} title={project.title} />
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="mt-auto shrink-0 pt-6">
+          <h3 className="font-display text-[clamp(3.2rem,7vw,7.5rem)] font-medium leading-[0.82] tracking-[-0.075em] short:text-[3rem] shorter:text-[2.4rem]">
+            {project.title}
+          </h3>
+          <div className="mt-6 grid gap-7 border-t border-paper/15 pt-5 sm:mt-8 sm:grid-cols-[1fr_auto] sm:pt-6 short:gap-4">
+            <p className="max-w-xl text-sm leading-7 text-paper/55 short:text-[0.8rem] short:leading-[1.5]">
+              {project.description}
+            </p>
+            <div className="flex flex-wrap content-start gap-2 sm:max-w-[260px] sm:justify-end">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-paper/15 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-paper/55"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <span
         aria-hidden="true"
@@ -260,7 +295,7 @@ export function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const [showRepositories, setShowRepositories] = useState(false)
-  const [endX, setEndX] = useState(0)
+  const [travel, setTravel] = useState<number | null>(null)
   const reducedMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -268,7 +303,7 @@ export function ProjectsSection() {
   })
   // End translation is measured so the track stops on GioGPT (last card),
   // instead of overshooting with a hard-coded vw distance.
-  const x = useTransform(scrollYProgress, [0.08, 0.92], [0, endX])
+  const x = useTransform(scrollYProgress, [0.08, 0.92], [0, -(travel ?? 0)])
   const progress = useTransform(scrollYProgress, [0.05, 0.95], ["0%", "100%"])
 
   useEffect(() => {
@@ -276,11 +311,11 @@ export function ProjectsSection() {
     if (!track) return
 
     const measure = () => {
-      const sticky = track.parentElement
-      if (!sticky) return
+      const viewport = track.parentElement
+      if (!viewport) return
       // Leave a small right pad so the last card isn't flush against the edge.
       const pad = 48
-      setEndX(Math.min(0, sticky.clientWidth - track.scrollWidth - pad))
+      setTravel(Math.max(0, track.scrollWidth + pad - viewport.clientWidth))
     }
 
     measure()
@@ -298,12 +333,15 @@ export function ProjectsSection() {
       <section
         id="projects"
         ref={sectionRef}
-        className="chapter-shell border-b border-paper/10 lg:h-[calc(100vh+var(--projects-scroll,350vh))]"
+        className="chapter-shell border-b border-paper/10 lg:h-[calc(100svh+var(--projects-scroll,350vh))]"
         style={
-          {
-            // Stick for one viewport, then scroll-travel scales with card count.
-            "--projects-scroll": `${Math.max(projects.length - 1, 1) * 70}vh`,
-          } as CSSProperties
+          // Stick for one viewport, then spend scroll proportional to the
+          // measured sideways distance. Deriving it in pixels keeps the scroll
+          // speed identical under OS display scaling, where a vh-based budget
+          // would drift against the px-capped card widths.
+          travel === null
+            ? undefined
+            : ({ "--projects-scroll": `${Math.round(travel * 0.9)}px` } as CSSProperties)
         }
       >
         <div className="mx-auto max-w-[1600px] px-5 py-24 sm:px-8 sm:py-32 lg:hidden">
@@ -319,23 +357,28 @@ export function ProjectsSection() {
           </div>
         </div>
 
-        <div className="sticky top-0 hidden h-svh lg:flex lg:flex-col lg:py-10">
+        <div className="sticky top-0 hidden h-svh lg:flex lg:flex-col lg:py-10 short:py-5 shorter:py-4">
           <div className="flex shrink-0 items-end justify-between px-12">
             <div>
-              <SectionLabel index="03" className="mb-4">Selected work</SectionLabel>
-              <KineticHeading immediate className="text-[clamp(3rem,6vw,6.5rem)]">
+              <SectionLabel index="03" className="mb-4 short:mb-2">
+                Selected work
+              </SectionLabel>
+              <KineticHeading
+                immediate
+                className="text-[clamp(3rem,6vw,6.5rem)] short:text-[2.6rem] shorter:text-[2rem]"
+              >
                 Projects
               </KineticHeading>
             </div>
-            <div className="mb-2 flex max-w-xs flex-col items-end gap-4 text-right">
-              <p className="text-sm leading-6 text-paper/45">
+            <div className="mb-2 flex max-w-xs flex-col items-end gap-4 text-right short:gap-2">
+              <p className="text-sm leading-6 text-paper/45 short:hidden">
                 A selection of deployed products, experiments, and systems. Scroll to move sideways.
               </p>
               <MoreProjectsButton onClick={() => setShowRepositories(true)} />
             </div>
           </div>
 
-          <div className="mt-10 min-h-0 flex-1 overflow-hidden">
+          <div className="mt-10 min-h-0 flex-1 overflow-hidden short:mt-5 shorter:mt-4">
             <motion.div
               ref={trackRef}
               style={reducedMotion ? undefined : { x }}
@@ -347,7 +390,7 @@ export function ProjectsSection() {
             </motion.div>
           </div>
 
-          <div className="mx-12 mt-6 h-px shrink-0 bg-paper/10">
+          <div className="mx-12 mt-6 h-px shrink-0 bg-paper/10 short:mt-3 shorter:mt-2">
             <motion.div style={{ width: progress }} className="h-full bg-acid" />
           </div>
         </div>
