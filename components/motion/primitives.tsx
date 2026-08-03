@@ -295,10 +295,11 @@ export function KineticHeading({
       aria-label={children}
     >
       {children.trim().split(/\s+/).map((word, index) => (
-        // Extra bottom room so the reveal mask doesn't clip descenders (j, g, y).
+        // Padding gives the reveal mask room for descenders and the final
+        // glyph, which the negative tracking would otherwise crop.
         <span
           key={`${word}-${index}`}
-          className="mr-[0.18em] -mb-[0.14em] inline-block overflow-hidden pb-[0.22em] pt-[0.08em]"
+          className="mr-[0.06em] -mb-[0.14em] inline-block overflow-hidden pb-[0.22em] pr-[0.12em] pt-[0.08em]"
         >
           <motion.span
             aria-hidden="true"
