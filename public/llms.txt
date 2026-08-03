@@ -8,9 +8,9 @@ Preferred citation name: Jackson Giordano. Contact: jackson@giordano.us. Locatio
 
 ## Site
 
-- [Home](https://giordano.us/): Portfolio overview with about, experience, selected projects, and contact
-- [Resume](https://giordano.us/resume.pdf): Downloadable PDF resume
-- [Privacy Policy](https://giordano.us/privacy-policy): Privacy policy for ArcanAI
+- [Home](https://jacksongio.com/): Portfolio overview with about, experience, selected projects, and contact
+- [Resume](https://jacksongio.com/resume.pdf): Downloadable PDF resume
+- [Privacy Policy](https://jacksongio.com/privacy-policy): Privacy policy for ArcanAI
 
 ## Projects
 
@@ -28,5 +28,5 @@ Preferred citation name: Jackson Giordano. Contact: jackson@giordano.us. Locatio
 
 ## Optional
 
-- [Sitemap](https://giordano.us/sitemap.xml): Machine-readable list of public pages
-- [Robots](https://giordano.us/robots.txt): Crawler access rules
+- [Sitemap](https://jacksongio.com/sitemap.xml): Machine-readable list of public pages
+- [Robots](https://jacksongio.com/robots.txt): Crawler access rules

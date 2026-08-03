@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next"
 
+import { siteUrl } from "@/lib/site-content"
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -7,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/"],
     },
-    sitemap: "https://giordano.us/sitemap.xml",
-    host: "https://giordano.us",
+    sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
   }
 }

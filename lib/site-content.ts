@@ -1,3 +1,6 @@
+/** Canonical origin for this portfolio. giordano.us hosts the family site. */
+export const siteUrl = "https://jacksongio.com"
+
 export const profile = {
   name: "Jackson Giordano",
   role: "Software Engineer",

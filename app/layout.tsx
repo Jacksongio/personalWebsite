@@ -3,9 +3,8 @@ import { IBM_Plex_Mono, Manrope, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import "lenis/dist/lenis.css"
 import { SmoothScroll } from "@/components/smooth-scroll"
-import { profile } from "@/lib/site-content"
+import { profile, siteUrl } from "@/lib/site-content"
 
-const siteUrl = "https://giordano.us"
 const siteTitle = "Jackson Giordano — Software Engineer & AI Builder"
 const siteDescription =
   "Jackson Giordano is a software engineer in Washington, DC building AI products, RAG systems, and digital experiences. Virginia Tech CS graduate, M.S. Software Engineering candidate, and Junior Software Engineer at eve.ai. Explore work including ArcanAI, StudiumVerbi, FogReport, and more."
