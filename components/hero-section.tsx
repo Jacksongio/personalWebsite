@@ -92,7 +92,7 @@ export function HeroSection() {
             className="my-auto origin-center py-12"
           >
             <p className="mb-3 ml-[1vw] font-mono text-[10px] uppercase tracking-[0.32em] text-acid">
-              Software engineer / AI engineer
+              Lead AI engineer
             </p>
             <h1 className="font-display text-[clamp(4.2rem,14.4vw,13.5rem)] font-medium leading-[0.72] tracking-[-0.09em] text-paper">
               <span className="block">JACKSON</span>

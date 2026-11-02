@@ -3,12 +3,12 @@ export const siteUrl = "https://jacksongio.com"
 
 export const profile = {
   name: "Jackson Giordano",
-  role: "Software Engineer",
+  role: "Lead AI Engineer",
   company: "Proven AI",
   location: "Washington, DC",
   email: "jackson@giordano.us",
   blurb:
-    "Computer Science graduate from Virginia Tech's College of Engineering and a Junior Software Engineer at eve.ai. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering. Always learning and open to collaboration.",
+    "Computer Science graduate from Virginia Tech's College of Engineering and a Lead AI Engineer at eve.ai. Currently pursuing an M.S. in Computer Science at the University of Tennessee with a focus in Software Engineering. Always learning and open to collaboration.",
   resume: "/resume.pdf",
   github: "https://github.com/jacksongio",
   linkedin: "https://www.linkedin.com/in/jacksongio",
@@ -55,14 +55,14 @@ export const education: TimelineEntry[] = [
 export const experience: TimelineEntry[] = [
   {
     period: "2026 — Present",
-    title: "Junior Software Engineer",
+    title: "Lead AI Engineer",
     org: "eve.ai",
     description:
       "Working in a client-facing AI engineering role supporting eve.ai through Proven AI. Fine-tuned models, implemented retrieval-augmented generation systems, and worked with vision-language models to deliver production solutions across diverse contracts.",
   },
   {
     period: "2025 — 2026",
-    title: "Associate Software Engineer",
+    title: "Junior Software Engineer",
     org: "Proven AI",
     description:
       "Developing and maintaining the company's software products across a variety of projects — company websites, internal tooling, and customer-facing applications.",
@@ -94,15 +94,6 @@ export const projects = [
     tags: ["Catholic", "RAG", "Scripture"],
     color: "cyan",
     image: "/studiumverbi.png",
-  },
-  {
-    title: "The Giordanos",
-    description:
-      "A polished wedding website combining complete RSVP management with interactive cocktail recommendations and a Spotify-powered song request experience for guests.",
-    href: "https://thegiordanos.net",
-    tags: ["Next.js", "RSVP", "Spotify"],
-    color: "orange",
-    image: "/thegiordanos.png",
   },
   {
     title: "FogReport.io",

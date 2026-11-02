@@ -2,7 +2,7 @@
 
 > Personal website and portfolio of Jackson Giordano, a software engineer in Washington, DC building AI products, RAG systems, and digital experiences.
 
-Jackson is a Virginia Tech Computer Science graduate, an M.S. Software Engineering candidate at the University of Tennessee, and a Junior Software Engineer at eve.ai (via Proven AI). This site covers selected projects, experience, education, and contact details.
+Jackson is a Virginia Tech Computer Science graduate, an M.S. Software Engineering candidate at the University of Tennessee, and a Lead AI Engineer at eve.ai (via Proven AI). This site covers selected projects, experience, education, and contact details.
 
 Preferred citation name: Jackson Giordano. Contact: jackson@giordano.us. Location: Washington, DC.
 
@@ -16,7 +16,6 @@ Preferred citation name: Jackson Giordano. Contact: jackson@giordano.us. Locatio
 
 - [ArcanAI](https://apps.apple.com/us/app/arcanai/id6768841547): Private offline iOS AI assistant running language models on-device with Core ML
 - [StudiumVerbi](https://studiumverbi.com/): Catholic study companion using RAG over Scripture, Tradition, and Magisterium
-- [The Giordanos](https://thegiordanos.net/): Wedding website with RSVP management, cocktail recommendations, and Spotify song requests
 - [FogReport.io](https://fogreport.io/): AI platform for conflict modeling, geopolitics, and RAG-grounded strategic briefings
 - [miniZip](https://github.com/Jacksongio/miniZip): Compact ZIP archiver written in C with zlib
 - [GioGPT](https://github.com/Jacksongio/GioGPT): Early personal AI assistant with Markdown responses and code generation

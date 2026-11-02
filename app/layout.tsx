@@ -5,9 +5,9 @@ import "lenis/dist/lenis.css"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { profile, siteUrl } from "@/lib/site-content"
 
-const siteTitle = "Jackson Giordano — Software Engineer & AI Builder"
+const siteTitle = "Jackson Giordano — Lead AI Engineer"
 const siteDescription =
-  "Jackson Giordano is a software engineer in Washington, DC building AI products, RAG systems, and digital experiences. Virginia Tech CS graduate, M.S. Software Engineering candidate, and Junior Software Engineer at eve.ai. Explore work including ArcanAI, StudiumVerbi, FogReport, and more."
+  "Jackson Giordano is a software engineer in Washington, DC building AI products, RAG systems, and digital experiences. Virginia Tech CS graduate, M.S. Software Engineering candidate, and Lead AI Engineer at eve.ai. Explore work including ArcanAI, StudiumVerbi, FogReport, and more."
 
 const manrope = Manrope({
   subsets: ["latin"],
